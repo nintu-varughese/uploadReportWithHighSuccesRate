@@ -1,0 +1,57 @@
+import { expect, Locator, Page } from '@playwright/test';
+import BasePage from './basepage';
+
+export default class RatingRangeSliderPage extends BasePage {
+  private readonly sectionHeader: Locator;
+  private readonly sliderInput: Locator;
+  private readonly thumb: Locator;
+  private readonly progressBar: Locator;
+  private readonly sendFeedbackButton: Locator;
+  private readonly feedbackMessage: Locator;
+
+  constructor(page: Page) {
+    super(page);
+    this.sectionHeader = page.locator('//h3[text()="Rating Range Slider"]');
+    this.sliderInput = page.locator('//input[@type="range"]');
+    this.thumb = page.locator('//div[@class="thumb"]');
+    this.progressBar = page.locator('//div[@class="progress-bar"]');
+    this.sendFeedbackButton = page.locator('//button[@id="feedback"]');
+    this.feedbackMessage = page.locator('//p[text()="Thank you for your feedback!"]');
+  }
+
+  /** Step 1: Open the Rating Range Slider section */
+  async openSection() {
+    await this.sectionHeader.click();
+    await this.page.waitForLoadState('domcontentloaded');
+  }
+
+  /** Step 2: Move slider gradually until Send Feedback button is visible */
+  async moveSliderUntilFeedbackVisible() {
+    for (let value = 0; value <= 100; value++) {
+      await this.sliderInput.evaluate((el, val) => {
+        const input = el as HTMLInputElement;
+        input.value = val.toString();
+        input.dispatchEvent(new Event('input', { bubbles: true }));
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      }, value);
+
+      if (await this.sendFeedbackButton.isVisible()) {
+        break;
+      }
+    }
+
+    // Optional: wait for progress bar to update
+    await expect(this.progressBar).toBeVisible();
+  }
+
+  /** Step 3: Click the Feedback button */
+  async clickFeedbackButton() {
+    await this.sendFeedbackButton.scrollIntoViewIfNeeded();
+    await this.sendFeedbackButton.click();
+  }
+
+  /** Step 4: Return feedback message locator */
+  getFeedbackMessageLocator(): Locator {
+    return this.feedbackMessage;
+  }
+}
