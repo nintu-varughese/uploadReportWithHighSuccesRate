@@ -2,54 +2,69 @@ import { expect, Page, Locator } from '@playwright/test';
 import BasePage from './basepage';
 
 export default class ContextMenuPage extends BasePage {
-  private readonly contextMenuSection = '//h3[text()="Right-Click Context Menu"]';
-  private readonly messageLocator = '//div[@id="message"]';
+  private readonly contextMenuSection: Locator;
+  private readonly messageLocator: Locator;
+  private readonly contextMenuItem: (menu: string) => Locator;
 
   constructor(page: Page) {
     super(page);
+
+    this.contextMenuSection = page.locator('//h3[text()="Right-Click Context Menu"]');
+    this.messageLocator = page.locator('//div[@id="message"]');
+
+    /**
+     * Dynamic locator generator for context menu items.
+     * @param menu - The visible text of the context menu item.
+     * @returns A Locator object for the specified menu item.
+     */
+    this.contextMenuItem = (menu: string) =>page.locator(`//div[@class="menu"]//li[text()="${menu}"]`);
   }
 
-  // Open the Right-Click Context Menu section
-  async openContextMenuSection() {
-    const section = this.page.locator(this.contextMenuSection);
-    await expect(section).toBeVisible({ timeout: 10000 });
-    await section.click();
+  /**
+   * Opens the "Right-Click Context Menu" section on the page.
+   * Waits until the section becomes visible and clicks to open it.
+   */
+  async openContextMenuSection(): Promise<void> {
+    await expect(this.contextMenuSection).toBeVisible({ timeout: 10000 });
+    await this.contextMenuSection.click();
   }
 
-  // Right-click on the target element
-  async rightClickTarget(targetLocator: string) {
+  /**
+   * Performs a right-click (context click) action on the given target element.
+   * @param targetLocator - The XPath or CSS selector of the element to right-click.
+   */
+  async rightClickTarget(targetLocator: string): Promise<void> {
     const target = this.page.locator(targetLocator);
     await expect(target).toBeVisible({ timeout: 10000 });
     await target.scrollIntoViewIfNeeded();
     await target.click({ button: 'right' });
   }
 
-  // Return locator for a context menu item
-  private contextContent(menu: string): Locator {
-    return this.page.locator(`//div[@class="menu"]//li[text()="${menu}"]`);
-  }
-
-  // Click a menu item
-  async menuItemClick(menu: string) {
-    const menuItem = this.contextContent(menu);
+  /**
+   * Clicks a specific item from the context menu.
+   * @param menu - The exact visible text of the context menu item to click.
+   */
+  async menuItemClick(menu: string): Promise<void> {
+    const menuItem = this.contextMenuItem(menu);
     await expect(menuItem).toBeVisible({ timeout: 5000 });
     await menuItem.click();
   }
 
-  // Hover over a menu item (for sub-menus)
-  async menuItemHover(menu: string) {
-    const menuItem = this.contextContent(menu);
+  /**
+   * Hovers over a specific context menu item.
+   * Useful for opening sub-menus or triggering hover effects.
+   * @param menu - The visible text of the context menu item to hover.
+   */
+  async menuItemHover(menu: string): Promise<void> {
+    const menuItem = this.contextMenuItem(menu);
     await expect(menuItem).toBeVisible({ timeout: 5000 });
     await menuItem.hover();
   }
 
-  // Locator for message text
-  getMessageLocator(): Locator {
-    return this.page.locator(this.messageLocator);
-  }
-
-  // Get message text
+  /**
+   * Fetches the text displayed inside the message element.
+   */
   async getMessageText(): Promise<string> {
-    return this.page.locator(this.messageLocator).innerText();
+    return this.messageLocator.innerText();
   }
 }

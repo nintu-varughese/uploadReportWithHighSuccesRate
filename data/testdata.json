@@ -1,0 +1,8 @@
+{
+  "multiLevelDropdown": {
+    "expectedSettingsSubMenu": ["My Tutorial", "HTML", "CSS", "JavaScript", "Awesome!"],
+    "expectedAnimalsSubMenu": ["Kangaroo", "Frog", "Horse", "Hedgehog"]
+  },
+  "dragDropImages": ["angular", "mongo", "node"],
+  "navigationMenuPages": ["About", "Blog", "Portfolio", "Contact"]
+}

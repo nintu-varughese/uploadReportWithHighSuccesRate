@@ -1,28 +1,27 @@
 import { Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
+import fs from 'fs';
+import path from 'path';
+const testDataPath = path.resolve(__dirname, '../data/testdata.json');
+const testData = JSON.parse(fs.readFileSync(testDataPath, 'utf-8'));
 
+/**
+ * Page Object for Multi-Level Dropdown interactions.
+ * Handles opening dropdown sections, clicking icons, navigating submenus, and retrieving submenu items.
+ */
 export default class MultiLevelDropdownPage extends BasePage {
   readonly dropdownLink: Locator;
   readonly iconButton: Locator;
   readonly settingsLink: Locator;
   readonly animalsLink: Locator;
   readonly subMenuItems: Locator;
+  readonly expectedSettingsSubMenu: string[] = testData.multiLevelDropdown.expectedSettingsSubMenu;
+  readonly expectedAnimalsSubMenu: string[] = testData.multiLevelDropdown.expectedAnimalsSubMenu;
 
-  readonly expectedSettingsSubMenu = [
-    'My Tutorial',
-    'HTML',
-    'CSS',
-    'JavaScript',
-    'Awesome!'
-  ];
-
-  readonly expectedAnimalsSubMenu = [
-    'Kangaroo',
-    'Frog',
-    'Horse',
-    'Hedgehog'
-  ];
-
+  /**
+   * Initializes all locators for the Multi-Level Dropdown page.
+   * @param {Page} page - Playwright Page object for browser interactions.
+   */
   constructor(page: Page) {
     super(page);
     this.dropdownLink = page.locator('//h3[text()="Multi Level Dropdown"]');
@@ -32,31 +31,39 @@ export default class MultiLevelDropdownPage extends BasePage {
     this.subMenuItems = page.locator('div.menu.menu-secondary-enter-done > a.menu-item');
   }
 
-  // -------------------------------
-  // Basic Actions
-  // -------------------------------
-
-  async openDropdownSection() {
+  /**
+   * Opens the Multi-Level Dropdown section by clicking its header.
+   */
+  async openDropdownSection(): Promise<void> {
     await this.dropdownLink.click();
     await this.page.waitForLoadState('domcontentloaded');
   }
 
-  async clickIconButton() {
+  /**
+   * Clicks the icon button to reveal submenu items.
+   */
+  async clickIconButton(): Promise<void> {
     await this.iconButton.click();
   }
 
-  async clickSettings() {
+  /**
+   * Clicks the "Settings" menu item.
+   */
+  async clickSettings(): Promise<void> {
     await this.settingsLink.click();
   }
 
-  async clickAnimals() {
+  /**
+   * Clicks the "Animals" menu item.
+   */
+  async clickAnimals(): Promise<void> {
     await this.animalsLink.click();
   }
 
   /**
-   * Get all submenu items text as plain text array
-   * Skips parent links like "Settings" or "Animals"
-   * Removes emojis and line breaks
+   * Returns all visible submenu items text as a string array.
+   * Skips parent links like "Settings" or "Animals" and removes emojis/line breaks.
+   * @returns {Promise<string[]>} Array of submenu item texts
    */
   async getSubMenuItemsText(): Promise<string[]> {
     await this.subMenuItems.first().waitFor({ state: 'visible' });
@@ -66,23 +73,17 @@ export default class MultiLevelDropdownPage extends BasePage {
     for (let i = 0; i < count; i++) {
       let text = await this.subMenuItems.nth(i).innerText();
       text = text.trim();
-
-      // Skip parent links
       if (text === 'Settings' || text === 'Animals') continue;
-
-      // Remove emoji + newline if present at the start
       text = text.replace(/^[^\w]*(.*)/s, '$1').trim();
-
       texts.push(text);
     }
     return texts;
   }
 
-  // -------------------------------
-  // Combined Helper Methods
-  // -------------------------------
-
-  /** Open Settings and return {url, submenu items} */
+  /**
+   * Opens Settings submenu and returns current URL and submenu items.
+   * @returns {Promise<{ url: string, submenuItems: string[] }>} URL and submenu items text
+   */
   async openSettingsAndGetDetails(): Promise<{ url: string; submenuItems: string[] }> {
     await this.openDropdownSection();
     await this.clickIconButton();
@@ -92,7 +93,10 @@ export default class MultiLevelDropdownPage extends BasePage {
     return { url, submenuItems };
   }
 
-  /** Open Animals and return {url, submenu items} */
+  /**
+   * Opens Animals submenu and returns current URL and submenu items.
+   * @returns {Promise<{ url: string, submenuItems: string[] }>} URL and submenu items text
+   */
   async openAnimalsAndGetDetails(): Promise<{ url: string; submenuItems: string[] }> {
     await this.openDropdownSection();
     await this.clickIconButton();
@@ -102,30 +106,41 @@ export default class MultiLevelDropdownPage extends BasePage {
     return { url, submenuItems };
   }
 
-  /** Click a submenu item by visible text */
-  async clickSubMenuItem(itemText: string) {
+  /**
+   * Clicks a submenu item by visible text.
+   * @param {string} itemText - The exact text of the submenu item to click
+   */
+  async clickSubMenuItem(itemText: string): Promise<void> {
     const itemLocator = this.subMenuItems.filter({ hasText: itemText });
     await itemLocator.first().click();
   }
 
-  /** Click HTML submenu item (Settings example) */
-  async clickHTMLSubMenu() {
+  /**
+   * Opens Settings submenu and clicks the "HTML" submenu item.
+   */
+  async clickHTMLSubMenu(): Promise<void> {
     await this.openDropdownSection();
     await this.clickIconButton();
     await this.clickSettings();
     await this.clickSubMenuItem('HTML');
   }
 
-  /** Click Animals submenu item by name */
-  async clickAnimalsSubMenu(itemText: string) {
+  /**
+   * Opens Animals submenu and clicks a submenu item by name.
+   * @param {string} itemText - The exact text of the Animals submenu item to click
+   */
+  async clickAnimalsSubMenu(itemText: string): Promise<void> {
     await this.openDropdownSection();
     await this.clickIconButton();
     await this.clickAnimals();
     await this.clickSubMenuItem(itemText);
   }
-  /** Get current URL */
-async getCurrentURL(): Promise<string> {
-  return this.page.url();
-}
 
+  /**
+   * Returns the current page URL.
+   * @returns {Promise<string>} Current URL of the page
+   */
+  async getCurrentURL(): Promise<string> {
+    return this.page.url();
+  }
 }

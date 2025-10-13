@@ -1,40 +1,54 @@
-import { expect, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
 
+/**
+ * Page Object for handling the "Covered Elements" section.
+ * Provides methods to open the section, interact with the button,
+ * and verify the success message.
+ */
 export default class CoveredElementsPage extends BasePage {
-  // Locators
-  private readonly coveredElementsHeading = '//h3[text()="Covered Elements"]';
-  private readonly wrapperDiv = '//div[@class="wrapper"]';
-  private readonly youGotMeButton = '//a[@onclick="youGotMe()"]';
-  private readonly missionAccomplishedText = '//p[text()="Mission accomplished"]';
+  readonly coveredElementsHeading: Locator;
+  readonly wrapperDiv: Locator;
+  readonly youGotMeButton: Locator;
+  readonly missionAccomplishedText: Locator;
 
+  /**
+   * Initializes all locators required for the Covered Elements page.
+   * @param {Page} page - Playwright Page object for browser interactions.
+   */
   constructor(page: Page) {
     super(page);
-  }
-  /**
-   * Navigate to the "Covered Elements" section
-   */
-  async openCoveredElementsSection() {
-    await this.page.locator(this.coveredElementsHeading).click();
+    this.coveredElementsHeading = page.locator('//h3[text()="Covered Elements"]');
+    this.wrapperDiv = page.locator('//div[@class="wrapper"]');
+    this.youGotMeButton = page.locator('//a[@onclick="youGotMe()"]');
+    this.missionAccomplishedText = page.locator('//p[text()="Mission accomplished"]');
   }
 
   /**
-   * Scroll down to the wrapper, click "You Got Me" button,
-   * scroll back up, and verify "Mission accomplished" text
+   * Navigate to the "Covered Elements" section by clicking the heading.
+   * 
+   * @async
+   * @returns {Promise<void>} Resolves when the section is opened.
    */
-  async scrollClickAndVerify() {
-    // Scroll down to the wrapper
-    const wrapper = this.page.locator(this.wrapperDiv);
-    await wrapper.scrollIntoViewIfNeeded();
+  async openCoveredElementsSection(): Promise<void> {
+    await this.coveredElementsHeading.click();
+  }
 
-    // Click the "You Got Me" button
-    await this.page.locator(this.youGotMeButton).click();
-
-    // Scroll back up
+  /**
+   * Scroll down to the wrapper, click the "You Got Me" button,
+   * scroll back to the top, and verify the "Mission accomplished" text.
+   * 
+   * @async
+   * @throws Will throw an error if the "Mission accomplished" text is not visible.
+   * @returns {Promise<void>} Resolves when the button is clicked and the message is verified.
+   */
+  async scrollClickAndVerify(): Promise<void> {
+    await this.wrapperDiv.scrollIntoViewIfNeeded();
+    await this.youGotMeButton.click();
     await this.page.evaluate(() => window.scrollTo({ top: 0, behavior: 'smooth' }));
-
-    // Verify the "Mission accomplished" text is visible
-    await expect(this.page.locator(this.missionAccomplishedText)).toBeVisible();
+    await expect(
+      this.missionAccomplishedText,
+      'Expected "Mission accomplished" message to be visible after clicking "You Got Me" button.'
+    ).toBeVisible();
   }
 }
-

@@ -1,0 +1,216 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e5]:
+      - link "image not displaying" [ref=e7] [cursor=pointer]:
+        - /url: http://www.automationtesting.in
+        - img "image not displaying" [ref=e8]
+      - generic [ref=e9]:
+        - heading "Automation Demo Site" [level=1] [ref=e10]
+        - link "Automation testing tools" [ref=e11] [cursor=pointer]:
+          - img [ref=e13]
+          - text: Automation testing tools
+    - navigation [ref=e15]:
+      - list [ref=e18]:
+        - listitem [ref=e19]:
+          - link "Home" [ref=e20] [cursor=pointer]:
+            - /url: Index.html
+        - listitem [ref=e21]:
+          - link "Register" [ref=e22] [cursor=pointer]:
+            - /url: Register.html
+        - listitem [ref=e23]:
+          - link "WebTable" [ref=e24] [cursor=pointer]:
+            - /url: WebTable.html
+        - listitem [ref=e25]:
+          - link "SwitchTo" [ref=e26] [cursor=pointer]:
+            - /url: SwitchTo.html
+          - generic [ref=e27]: 
+        - listitem [ref=e28]:
+          - link "Widgets" [ref=e29] [cursor=pointer]:
+            - /url: Widgets.html
+          - generic [ref=e30]: 
+        - listitem [ref=e31]:
+          - link "Interactions" [ref=e32] [cursor=pointer]:
+            - /url: Interactions.html
+          - generic [ref=e33]: 
+        - listitem [ref=e34]:
+          - link "Video" [ref=e35] [cursor=pointer]:
+            - /url: SwitchTo.html
+          - generic [ref=e36]: 
+        - listitem [ref=e37]:
+          - link "WYSIWYG" [ref=e38] [cursor=pointer]:
+            - /url: WYSIWYG.html
+          - generic [ref=e39]: 
+        - listitem [ref=e40]:
+          - link "More" [ref=e41] [cursor=pointer]:
+            - /url: "#"
+          - generic [ref=e42]: 
+        - listitem [ref=e43]:
+          - link "Practice Site" [ref=e44] [cursor=pointer]:
+            - /url: http://practice.automationtesting.in/
+  - generic [ref=e45]:
+    - generic [ref=e48]:
+      - heading "File Download Demo for Automation" [level=2] [ref=e49]
+      - link "Download" [ref=e51] [cursor=pointer]:
+        - /url: https://github.com//sakinala/AutomationTesting/raw/master/samplefile.pdf
+      - generic [ref=e52]:
+        - generic [ref=e53]: Generated Text File to Download
+        - generic [ref=e54]:
+          - paragraph [ref=e55]: By default Download link will be hidden.
+          - paragraph [ref=e56]:
+            - text: You need to enter data in the textarea and click on 'Generate File' button to activate download link.
+            - link "File management software" [ref=e57] [cursor=pointer]:
+              - img [ref=e59]
+              - text: File management software
+            - link "Automation testing tools" [ref=e61] [cursor=pointer]:
+              - img [ref=e63]
+              - text: Automation testing tools
+          - paragraph [ref=e65]: Data entered in the below textarea will be download with file name 'info.txt'.
+          - generic [ref=e66]:
+            - generic [ref=e67]: "Enter Data:"
+            - textbox [ref=e68]: Hello Playwright!
+            - generic [ref=e69]: 983 characters remaining
+          - button "Generate File" [active] [ref=e70] [cursor=pointer]
+          - link "Download" [ref=e71] [cursor=pointer]:
+            - /url: blob:https://demo.automationtesting.in/0b4aa5c3-7779-42be-8940-cec03bd367fb
+      - generic [ref=e72]:
+        - generic [ref=e73]: Generated PDF File to Download
+        - generic [ref=e74]:
+          - paragraph [ref=e75]: By default Download link will be hidden.
+          - paragraph [ref=e76]:
+            - text: You need to enter data in the textarea and click on 'Generate File' button to activate download link.
+            - link "Text processing tools" [ref=e77] [cursor=pointer]:
+              - img [ref=e79]
+              - text: Text processing tools
+            - link "Hyperlink checker software" [ref=e81] [cursor=pointer]:
+              - img [ref=e83]
+              - text: Hyperlink checker software
+          - paragraph [ref=e85]: Data entered in the below textarea will be download with file name 'info.pdf'.
+          - generic [ref=e86]:
+            - generic [ref=e87]: "Enter Data:"
+            - textbox [ref=e88]
+            - generic [ref=e89]: 1000 characters remaining
+          - button "Generate File" [disabled] [ref=e90]
+    - generic [ref=e92]:
+      - generic [ref=e94]:
+        - insertion [ref=e95]:
+          - generic [ref=e97]:
+            - generic "These are topics related to the article that might interest you" [ref=e98]: Discover more
+            - link "Purchase web automation courses" [ref=e99] [cursor=pointer]:
+              - img [ref=e101]
+              - text: Purchase web automation courses
+            - link "Buy web development tools" [ref=e103] [cursor=pointer]:
+              - img [ref=e105]
+              - text: Buy web development tools
+            - link "UI testing software" [ref=e107] [cursor=pointer]:
+              - img [ref=e109]
+              - text: UI testing software
+            - link "Database management systems" [ref=e111] [cursor=pointer]:
+              - img [ref=e113]
+              - text: Database management systems
+            - link "pdf" [ref=e115] [cursor=pointer]:
+              - img [ref=e117]
+              - text: pdf
+            - link "Purchase performance testing tools" [ref=e119] [cursor=pointer]:
+              - img [ref=e121]
+              - text: Purchase performance testing tools
+            - link "File management software" [ref=e123] [cursor=pointer]:
+              - img [ref=e125]
+              - text: File management software
+            - link "Find automation testing consultants" [ref=e127] [cursor=pointer]:
+              - img [ref=e129]
+              - text: Find automation testing consultants
+        - link "Data analysis tools" [ref=e131] [cursor=pointer]:
+          - img [ref=e133]
+          - text: Data analysis tools
+        - link "UI testing software" [ref=e135] [cursor=pointer]:
+          - img [ref=e137]
+          - text: UI testing software
+      - insertion [ref=e141]:
+        - generic [ref=e143]:
+          - generic "These are topics related to the article that might interest you" [ref=e144]: Discover more
+          - link "Hire automation testing experts" [ref=e145] [cursor=pointer]:
+            - img [ref=e147]
+            - text: Hire automation testing experts
+          - link "PDF" [ref=e149] [cursor=pointer]:
+            - img [ref=e151]
+            - text: PDF
+          - link "Data analysis tools" [ref=e153] [cursor=pointer]:
+            - img [ref=e155]
+            - text: Data analysis tools
+          - link "Purchase web automation courses" [ref=e157] [cursor=pointer]:
+            - img [ref=e159]
+            - text: Purchase web automation courses
+          - link "File input controls" [ref=e161] [cursor=pointer]:
+            - img [ref=e163]
+            - text: File input controls
+          - link "Website link builder" [ref=e165] [cursor=pointer]:
+            - img [ref=e167]
+            - text: Website link builder
+          - link "File management software" [ref=e169] [cursor=pointer]:
+            - img [ref=e171]
+            - text: File management software
+          - link "Database management systems" [ref=e173] [cursor=pointer]:
+            - img [ref=e175]
+            - text: Database management systems
+          - link "Purchase test automation frameworks" [ref=e177] [cursor=pointer]:
+            - img [ref=e179]
+            - text: Purchase test automation frameworks
+          - link "PDF File" [ref=e181] [cursor=pointer]:
+            - img [ref=e183]
+            - text: PDF File
+      - insertion [ref=e187]:
+        - generic [ref=e189]:
+          - generic "These are topics related to the article that might interest you" [ref=e190]: Discover more
+          - link "Buy manual testing services" [ref=e191] [cursor=pointer]:
+            - img [ref=e193]
+            - text: Buy manual testing services
+          - link "Workflow automation services" [ref=e195] [cursor=pointer]:
+            - img [ref=e197]
+            - text: Workflow automation services
+          - link "Purchase UI testing software" [ref=e199] [cursor=pointer]:
+            - img [ref=e201]
+            - text: Purchase UI testing software
+          - link "Get API testing software" [ref=e203] [cursor=pointer]:
+            - img [ref=e205]
+            - text: Get API testing software
+          - link "Text box input tools" [ref=e207] [cursor=pointer]:
+            - img [ref=e209]
+            - text: Text box input tools
+          - link "PDF" [ref=e211] [cursor=pointer]:
+            - img [ref=e213]
+            - text: PDF
+          - link "Hire automation testing experts" [ref=e215] [cursor=pointer]:
+            - img [ref=e217]
+            - text: Hire automation testing experts
+          - link "Text processing tools" [ref=e219] [cursor=pointer]:
+            - img [ref=e221]
+            - text: Text processing tools
+          - link "Find website accessibility tools" [ref=e223] [cursor=pointer]:
+            - img [ref=e225]
+            - text: Find website accessibility tools
+    - generic [ref=e229]:
+      - generic [ref=e230]:
+        - text: "\"@ 2016\""
+        - link "Automation Testing" [ref=e231] [cursor=pointer]:
+          - /url: "#"
+        - text: "\"All Rights Reserved.\""
+      - generic [ref=e232]:
+        - link "" [ref=e233] [cursor=pointer]:
+          - /url: https://www.facebook.com/automationtesting2016/
+          - generic [ref=e234]: 
+        - link "" [ref=e235] [cursor=pointer]:
+          - /url: https://twitter.com/krishnasakinala
+          - generic [ref=e236]: 
+        - link "" [ref=e237] [cursor=pointer]:
+          - /url: https://www.linkedin.com/nhome/?trk=hb_signin
+          - generic [ref=e238]: 
+        - link "" [ref=e239] [cursor=pointer]:
+          - /url: https://plus.google.com/105286300926085335367
+          - generic [ref=e240]: 
+        - link "" [ref=e241] [cursor=pointer]:
+          - /url: https://www.youtube.com/channel/UCmQRa3pWM9zsB474URz8ESg
+          - generic [ref=e242]: 
+```

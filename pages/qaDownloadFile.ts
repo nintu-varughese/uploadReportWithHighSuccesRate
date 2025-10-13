@@ -1,7 +1,6 @@
 import { expect, Page, Locator } from '@playwright/test';
 import BasePage from './basepage';
 import path from 'path';
-import fs from 'fs';
 
 export default class QaDownloadFilePage extends BasePage {
   private readonly downloadHeading: Locator;
@@ -17,10 +16,7 @@ export default class QaDownloadFilePage extends BasePage {
    * Download the file and return its path for verification
    */
   async downloadFileAndReturnPath(expectedFileName: string): Promise<string> {
-    // Open section
     await this.downloadHeading.click();
-
-    // Intercept download
     const [download] = await Promise.all([
       this.page.waitForEvent('download'),
       this.downloadButton.click(),

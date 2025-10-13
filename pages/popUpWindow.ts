@@ -2,18 +2,22 @@ import { Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
 
 export default class PopUpWindowPage extends BasePage {
-  private readonly popUpHeading = '//h3[text()="Pop-Up Window"]';
-  private readonly openButton = '//a[@onclick="openPopUp()"]';
-  private readonly closeButton = '//button[@onclick="window.close()"]';
-  private readonly successMessage = '//p[text()="Button Clicked"]';
+  private readonly popUpHeading: Locator;
+  private readonly openButton: Locator;
+  private readonly closeButtonSelector: string; // store as selector string
+  private readonly successMessageLocator: Locator;
 
   constructor(page: Page) {
     super(page);
+    this.popUpHeading = page.locator('//h3[text()="Pop-Up Window"]');
+    this.openButton = page.locator('//a[@onclick="openPopUp()"]');
+    this.closeButtonSelector = '//button[@onclick="window.close()"]'; // use string
+    this.successMessageLocator = page.locator('//p[text()="Button Clicked"]');
   }
 
   /** Open the Pop-Up Window section */
   async openPopUpSection() {
-    await this.page.locator(this.popUpHeading).click();
+    await this.popUpHeading.click();
     await this.page.waitForLoadState('domcontentloaded');
   }
 
@@ -23,15 +27,15 @@ export default class PopUpWindowPage extends BasePage {
   async openPopUpAndClose(): Promise<Locator> {
     const [popup] = await Promise.all([
       this.page.context().waitForEvent('page'),
-      this.page.locator(this.openButton).click(),
+      this.openButton.click(),
     ]);
 
     await popup.waitForLoadState('domcontentloaded');
 
     const popupClosePromise = popup.waitForEvent('close');
-    await popup.locator(this.closeButton).click();
+    await popup.locator(this.closeButtonSelector).click(); // use string selector
     await popupClosePromise;
 
-    return this.page.locator(this.successMessage);
+    return this.successMessageLocator;
   }
 }

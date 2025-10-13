@@ -7,12 +7,18 @@ export default class BasePage {
     this.page = page;
   }
 
-  // Navigate to any given URL
+  /**
+   * Navigate to a given URL.
+   * @param url {string} - The URL to navigate to.
+   */
   async navigate(url: string) {
     await this.page.goto(url);
   }
 
-  // Navigate to the secondary base URL from .env
+  /**
+   * Navigate to the secondary application URL defined in environment variables.
+   * @throws Will throw an error if SECONDARY_BASE_URL is not defined in the .env file.
+   */
   async navigateToSecondaryApp() {
     const secondaryUrl = process.env.SECONDARY_BASE_URL;
     if (!secondaryUrl) {
@@ -21,8 +27,12 @@ export default class BasePage {
     await this.page.goto(secondaryUrl);
   }
 
-  // Check if an element is visible
-  async isVisible(locator: string) {
+  /**
+   * Check if an element is visible on the page.
+   * @param locator {string} - The selector or locator of the element to check visibility.
+   * @returns {Promise<boolean>} True if the element is visible, otherwise false.
+   */
+  async isVisible(locator: string): Promise<boolean> {
     return await this.page.locator(locator).isVisible();
   }
 }

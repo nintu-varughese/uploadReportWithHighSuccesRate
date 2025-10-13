@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
 
 export default class BudgetTrackerPage extends BasePage {
@@ -8,6 +8,10 @@ export default class BudgetTrackerPage extends BasePage {
   readonly totalAmount: Locator;
   readonly typeDropdown: Locator;
 
+  /**
+   * Initializes the BudgetTrackerPage with all required locators.
+   * @param {Page} page - The Playwright Page object for browser interactions.
+   */
   constructor(page: Page) {
     super(page);
     this.budgetHeader = page.locator('//h3[text()="Budget Tracker"]');
@@ -17,11 +21,25 @@ export default class BudgetTrackerPage extends BasePage {
     this.typeDropdown = page.locator('select.input-type').first();
   }
 
-  async openBudgetTracker() {
+  /**
+   * Open the Budget Tracker section by clicking its header.
+   * 
+   * @async
+   * @returns {Promise<void>} Resolves when the section header is clicked.
+   */
+  async openBudgetTracker(): Promise<void> {
     await this.budgetHeader.click();
   }
 
-  async addEntry(amount: number, type: 'income' | 'expense' = 'income') {
+  /**
+   * Add a new budget entry with the specified amount and type.
+   * 
+   * @async
+   * @param {number} amount - The amount for the new entry.
+   * @param {'income' | 'expense'} [type='income'] - The type of the entry. Defaults to 'income'.
+   * @returns {Promise<void>} Resolves when the entry is added and the total is updated.
+   */
+  async addEntry(amount: number, type: 'income' | 'expense' = 'income'): Promise<void> {
     await this.newEntryButton.click();
     await this.typeDropdown.selectOption(type);
     await this.amountInput.fill(amount.toString());
@@ -29,6 +47,12 @@ export default class BudgetTrackerPage extends BasePage {
     await this.page.waitForTimeout(500); // wait for total update
   }
 
+  /**
+   * Get the current total amount from the Budget Tracker summary.
+   * 
+   * @async
+   * @returns {Promise<number>} The total amount as a number. Returns 0 if the total text is empty or invalid.
+   */
   async getTotal(): Promise<number> {
     const text = await this.totalAmount.textContent();
     return parseFloat(text?.replace('$', '').trim() || '0');

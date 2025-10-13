@@ -2,12 +2,12 @@ import { expect, Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
 
 export default class RatingRangeSliderPage extends BasePage {
-  private readonly sectionHeader: Locator;
-  private readonly sliderInput: Locator;
-  private readonly thumb: Locator;
-  private readonly progressBar: Locator;
-  private readonly sendFeedbackButton: Locator;
-  private readonly feedbackMessage: Locator;
+  readonly sectionHeader: Locator;
+  readonly sliderInput: Locator;
+  readonly thumb: Locator;
+  readonly progressBar: Locator;
+  readonly sendFeedbackButton: Locator;
+  readonly feedbackMessage: Locator;
 
   constructor(page: Page) {
     super(page);
@@ -48,10 +48,5 @@ export default class RatingRangeSliderPage extends BasePage {
   async clickFeedbackButton() {
     await this.sendFeedbackButton.scrollIntoViewIfNeeded();
     await this.sendFeedbackButton.click();
-  }
-
-  /** Step 4: Return feedback message locator */
-  getFeedbackMessageLocator(): Locator {
-    return this.feedbackMessage;
   }
 }

@@ -1,72 +1,76 @@
-import { Page } from '@playwright/test';
+import { Page, Locator, Download } from '@playwright/test';
 import path from 'path';
 import fs from 'fs';
-import BasePage from "./basepage";
+import BasePage from './basepage';
 
+/**
+ * Page Object for handling File Upload and Download operations.
+ */
 export default class FileUploadPage extends BasePage {
+  readonly filePath: string;
+  readonly moreMenu: Locator;
+  readonly fileUploadLink: Locator;
+  readonly fileInput: Locator;
+  readonly uploadSuccess: Locator;
+  readonly fileDownloadLink: Locator;
+  readonly textArea: Locator;
+  readonly generateFileButton: Locator;
+  readonly downloadLink: Locator;
 
-  // =============================
-  // File paths
-  // =============================
-  private readonly filePath = path.resolve(__dirname, '../uploadFile.png');
-
-  // =============================
-  // File Upload
-  // =============================
   /**
-   * Navigate to File Upload section, upload a file
-   * @returns locator of uploaded file success message for assertion
+   * Initializes locators and file path for upload/download
+   * @param {Page} page - Playwright Page object
    */
-  async uploadFile() {
-    // Open "More" menu
-    await this.page.locator('//a[text()="More"]').click();
+  constructor(page: Page) {
+    super(page);
 
-    // Navigate to "File Upload"
-    await this.page.locator('//a[text()="File Upload"]').click();
-
-    // Upload the file
-    const fileInput = this.page.locator('//input[@id="input-4"]');
-    await fileInput.setInputFiles(this.filePath);
-
-    // Return locator for test to assert visibility
-    return this.page.locator('//span[text()="Upload"]');
+    this.filePath = path.resolve(__dirname, '../uploadFile.png');
+    this.moreMenu = page.locator('//a[text()="More"]');
+    this.fileUploadLink = page.locator('//a[text()="File Upload"]');
+    this.fileInput = page.locator('//input[@id="input-4"]');
+    this.uploadSuccess = page.locator('//span[text()="Upload"]'); 
+    this.fileDownloadLink = page.locator('//a[text()="File Download"]');
+    this.textArea = page.locator('//textarea[@id="textbox"]');
+    this.generateFileButton = page.locator('(//button[text()="Generate File"])[1]');
+    this.downloadLink = page.locator('//a[@id="link-to-download"]');
   }
 
-  // =============================
-  // File Download
-  // =============================
   /**
-   * Generate a TXT file with the provided text and download it
-   * @param text The text to include in the TXT file
-   * @returns file path of the downloaded file for assertion
+   * Navigate to File Upload section and upload a file
+   * @async
+   * @returns {Promise<Locator>} Locator of the uploaded file success message
+   */
+  async uploadFile(): Promise<Locator> {
+    await this.moreMenu.click();
+    await this.fileUploadLink.click();
+    await this.fileInput.setInputFiles(this.filePath);
+    await this.uploadSuccess.waitFor({ state: 'visible', timeout: 5000 });
+    return this.uploadSuccess;
+  }
+
+  /**
+   * Generate a downloadable file with the specified text
+   * and download it to the project directory.
+   * @async
+   * @param {string} text - Text to include in the file
+   * @returns {Promise<string>} Full path of the downloaded file
    */
   async generateDownloadFile(text: string): Promise<string> {
-    // Open "More" menu
-    await this.page.locator('//a[text()="More"]').click();
+    await this.moreMenu.click();
+    await this.fileDownloadLink.click();
 
-    // Navigate to "File Download"
-    await this.page.locator('//a[text()="File Download"]').click();
+    await this.textArea.fill('');
+    await this.textArea.type(text);
 
-    // Fill the textarea with the text
-    const textArea = this.page.locator('//textarea[@id="textbox"]');
-    await textArea.fill('');      // Clear existing text
-    await textArea.type(text);    // Type new text
-
-    // Click "Generate File" (TXT only)
-    await this.page.locator('(//button[text()="Generate File"])[1]').click();
-
-    // Wait for download event and click download link
     const [download] = await Promise.all([
       this.page.waitForEvent('download'),
-      this.page.locator('//a[@id="link-to-download"]').click()
+      this.generateFileButton.click(),
     ]);
 
-    // Save downloaded file to project root
     const downloadPath = path.resolve(__dirname, '../');
     const filePath = path.join(downloadPath, await download.suggestedFilename());
     await download.saveAs(filePath);
 
-    // Return file path for test to perform assertions
     return filePath;
   }
 }

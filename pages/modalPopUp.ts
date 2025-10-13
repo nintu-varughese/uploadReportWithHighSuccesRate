@@ -1,35 +1,31 @@
-import { expect, Page, Locator } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
 
+/**
+ * Page Object for handling Modal Popup interactions.
+ * Includes actions like opening the modal and accessing locators.
+ */
 export default class ModalPopUpPage extends BasePage {
-  // =============================
-  // Locators
-  // =============================
-  private readonly modalHeading = '//h3[text()="Onboarding Modal Popup"]';
-  private readonly closeIcon = '//i[@class="fas fa-bars"]';
-  private readonly welcomeMessageSelector = 'div.title';
+  readonly modalHeading: Locator;
+  readonly closeIcon: Locator;
+  readonly welcomeMessage: Locator;
 
+  /**
+   * Initializes all locators for the Modal Popup page.
+   * @param {Page} page - Playwright Page object for browser interactions.
+   */
   constructor(page: Page) {
     super(page);
+    this.modalHeading = page.locator('//h3[text()="Onboarding Modal Popup"]');
+    this.closeIcon = page.locator('//i[@class="fas fa-bars"]');
+    this.welcomeMessage = page.locator('div.title', { hasText: 'Welcome Peter Parker!' });
   }
 
-  // =============================
-  // Getters
-  // =============================
-  get welcomeMessageLocator(): Locator {
-    return this.page.locator(this.welcomeMessageSelector, { hasText: 'Welcome Peter Parker!' });
-  }
-
-  // =============================
-  // Actions
-  // =============================
-  async openModalPopupSection() {
-    await this.page.locator(this.modalHeading).click();
-    await this.page.locator(this.closeIcon).click();
-  }
-
-  // Optional: reusable assert method
-  async assertWelcomeMessageVisible() {
-    await expect(this.welcomeMessageLocator).toBeVisible();
+  /**
+   * Opens the Modal Popup section and closes the popup via the close icon.
+   */
+  async openModalPopupSection(): Promise<void> {
+    await this.modalHeading.click();
+    await this.closeIcon.click();
   }
 }

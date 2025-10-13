@@ -16,13 +16,13 @@ const reporters: ReporterDescription[] = [
   [
     'allure-playwright',
     {
-      outputFolder: 'allure-results',
-      detail: false,
-      suiteTitle: false,
-      useCucumberStepReporter: false,
-      useStepsForHooks: false,
-      screenshots: 'on',
-      videos: 'on',
+     outputFolder: 'allure-results',
+    detail: false,
+    suiteTitle: false,
+    useCucumberStepReporter: false,
+    useStepsForHooks: false,
+    screenshots: 'on',
+    videos: 'on'
     },
   ],
 ];

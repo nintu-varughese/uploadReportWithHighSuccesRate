@@ -1,96 +1,108 @@
-// import { expect, Page } from '@playwright/test';
-// import BasePage from './basepage';
-
-// /**
-//  * Page Object for handling drag and drop interactions
-//  * Supports both static and dynamic drag and drop
-//  */
-// export default class DragDropPage extends BasePage {
-
-//   // =============================
-//   // Static Drag and Drop
-//   // =============================
-//   /**
-//    * Drag Angular image into static drop area and verify
-//    * @returns boolean indicating success
-//    */
-//   async performStaticDragAndDrop(): Promise<boolean> {
-//     await this.page.locator('//a[text()="Interactions "]').click();
-//     await this.page.locator('//a[text()="Drag and Drop "]').click();
-//     await this.page.locator('//a[text()="Static "]').click();
-
-//     const angularImg = this.page.locator('//img[@id="angular"]');
-//     const dropArea = this.page.locator('//div[@id="droparea"]');
-
-//     await angularImg.waitFor({ state: 'visible' });
-//     await dropArea.waitFor({ state: 'visible' });
-
-//     await angularImg.dragTo(dropArea);
-
-//     return await dropArea.locator('//img[@id="angular"]').isVisible();
-//   }
-
-//   // =============================
-//   // Dynamic Drag and Drop
-//   // =============================
-//   /**
-//    * Drag Angular image into dynamic drop area and verify
-//    * @returns boolean indicating success
-//    */
-//   async performDynamicDragAndDrop(): Promise<boolean> {
-//     await this.page.locator('//a[text()="Interactions "]').click();
-//     await this.page.locator('//a[text()="Drag and Drop "]').click();
-//     await this.page.locator('//a[text()="Dynamic "]').click();
-
-//     const angularImg = this.page.locator('//img[@id="angular"]');
-//     const dynamicDropArea = this.page.locator('//div[@id="droparea"]');
-
-//     await angularImg.waitFor({ state: 'visible' });
-//     await dynamicDropArea.waitFor({ state: 'visible' });
-
-//     await angularImg.dragTo(dynamicDropArea);
-
-//     return await dynamicDropArea.locator('//img[@id="angular"]').isVisible();
-//   }
-// }
-import { expect, Page } from '@playwright/test';
+import { Page, Locator } from '@playwright/test';
 import BasePage from './basepage';
 
+/**
+ * Page Object for handling Drag and Drop interactions
+ * Supports both Static and Dynamic tabs in the Demo site
+ */
 export default class DragDropPage extends BasePage {
+  readonly interactionsLink: Locator;
+  readonly dragDropLink: Locator;
+  readonly staticTab: Locator;
+  readonly dynamicTab: Locator;
+  readonly dropArea: Locator;
+  readonly staticAngularImg: Locator;
+  readonly staticMongoImg: Locator;
+  readonly staticNodeImg: Locator;
+  readonly staticImages: Locator[];
+  readonly droppedStaticAngularImg: Locator;
+  readonly droppedStaticMongoImg: Locator;
+  readonly droppedStaticNodeImg: Locator;
+  readonly droppedStaticImages: Locator[];
+  readonly dynamicOriginalAngularImg: Locator;
+  readonly dynamicOriginalMongoImg: Locator;
+  readonly dynamicOriginalNodeImg: Locator;
+  readonly dynamicOriginalImages: Locator[];
+  readonly dynamicDroppedAngularImg: Locator;
+  readonly dynamicDroppedMongoImg: Locator;
+  readonly dynamicDroppedNodeImg: Locator;
+  readonly dynamicDroppedImages: Locator[];
 
-  // =============================
-  // Static Drag and Drop
-  // =============================
-  async performStaticDragAndDropForImages(images: string[]): Promise<void> {
-    await this.page.locator('//a[text()="Interactions "]').click();
-    await this.page.locator('//a[text()="Drag and Drop "]').click();
-    await this.page.locator('//a[text()="Static "]').click();
+  /**
+   * Initializes all locators required for drag-and-drop tests
+   * @param {Page} page - Playwright Page object
+   */
+  constructor(page: Page) {
+    super(page);
 
-    const dropArea = this.page.locator('//div[@id="droparea"]');
-    await dropArea.waitFor({ state: 'visible' });
+    this.interactionsLink = page.locator('//a[text()="Interactions "]');
+    this.dragDropLink = page.locator('//a[text()="Drag and Drop "]');
+    this.staticTab = page.locator('//a[text()="Static "]');
+    this.dynamicTab = page.locator('//a[text()="Dynamic "]');
+    this.dropArea = page.locator('//div[@id="droparea"]');
+    this.staticAngularImg = page.locator('//div[@id="dragarea"]//img[@id="angular"]');
+    this.staticMongoImg = page.locator('//div[@id="dragarea"]//img[@id="mongo"]');
+    this.staticNodeImg = page.locator('//div[@id="dragarea"]//img[@id="node"]');
+    this.staticImages = [this.staticAngularImg, this.staticMongoImg, this.staticNodeImg];
+    this.droppedStaticAngularImg = page.locator('//div[@id="droparea"]//img[@id="angular"]');
+    this.droppedStaticMongoImg = page.locator('//div[@id="droparea"]//img[@id="mongo"]');
+    this.droppedStaticNodeImg = page.locator('//div[@id="droparea"]//img[@id="node"]');
+    this.droppedStaticImages = [
+      this.droppedStaticAngularImg,
+      this.droppedStaticMongoImg,
+      this.droppedStaticNodeImg
+    ];
+    this.dynamicOriginalAngularImg = page.locator('//div[@id="dragarea"]//img[@id="angular"]');
+    this.dynamicOriginalMongoImg = page.locator('//div[@id="dragarea"]//img[@id="mongo"]');
+    this.dynamicOriginalNodeImg = page.locator('//div[@id="dragarea"]//img[@id="node"]');
+    this.dynamicOriginalImages = [
+      this.dynamicOriginalAngularImg,
+      this.dynamicOriginalMongoImg,
+      this.dynamicOriginalNodeImg
+    ];
+    this.dynamicDroppedAngularImg = page.locator('//div[@id="droparea"]//img[@id="angular"]');
+    this.dynamicDroppedMongoImg = page.locator('//div[@id="droparea"]//img[@id="mongo"]');
+    this.dynamicDroppedNodeImg = page.locator('//div[@id="droparea"]//img[@id="node"]');
+    this.dynamicDroppedImages = [
+      this.dynamicDroppedAngularImg,
+      this.dynamicDroppedMongoImg,
+      this.dynamicDroppedNodeImg
+    ];
+  }
 
-    for (const imgId of images) {
-      const img = this.page.locator(`//img[@id="${imgId}"]`);
+  /**
+   * Drag all images from the source area to the drop area in the Static tab
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
+  async dragAndDropStaticImages(): Promise<void> {
+    await this.interactionsLink.click();
+    await this.dragDropLink.click();
+    await this.staticTab.click();
+    await this.dropArea.waitFor({ state: 'visible' });
+
+    for (const img of this.staticImages) {
       await img.waitFor({ state: 'visible' });
-      await img.dragTo(dropArea);
+      await img.dragTo(this.dropArea);
     }
   }
 
-  // =============================
-  // Dynamic Drag and Drop
-  // =============================
-  async performDynamicDragAndDropForImages(images: string[]): Promise<void> {
-    await this.page.locator('//a[text()="Interactions "]').click();
-    await this.page.locator('//a[text()="Drag and Drop "]').click();
-    await this.page.locator('//a[text()="Dynamic "]').click();
+  /**
+   * Drag all images from the source area to the drop area in the Dynamic tab
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
+  async dragAndDropDynamicImages(): Promise<void> {
+    await this.interactionsLink.click();
+    await this.dragDropLink.click();
+    await this.dynamicTab.click();
+    await this.dropArea.waitFor({ state: 'visible' });
 
-    const dropArea = this.page.locator('//div[@id="droparea"]');
-    await dropArea.waitFor({ state: 'visible' });
-
-    for (const imgId of images) {
-      const img = this.page.locator(`//img[@id="${imgId}"]`);
+    for (const img of this.dynamicOriginalImages) {
       await img.waitFor({ state: 'visible' });
-      await img.dragTo(dropArea);
+      await img.dragTo(this.dropArea);
     }
   }
 }

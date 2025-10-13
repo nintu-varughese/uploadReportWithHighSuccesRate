@@ -1,68 +1,54 @@
-import { expect, Page } from '@playwright/test';
+import { expect, Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
 
 /**
- * Page Object Model for the Home Page of QA Playground.
- * Extends BasePage to reuse common page methods and protected `page` instance.
+ * Page Object for the Home Page of QA Playground.
+ * Provides methods to navigate, click links, and verify headings.
  */
 export default class HomePage extends BasePage {
+  readonly heading: Locator;
+  readonly miniWebAppsLink: Locator;
+  readonly miniWebAppsHeading: Locator;
+
   /**
-   * Constructor for HomePage
-   * @param page {Page} - Playwright Page instance to interact with the browser.
+   * Initializes all static locators on the Home Page.
+   * @param {Page} page - Playwright Page object for browser interactions.
    */
   constructor(page: Page) {
     super(page);
+    this.heading = page.locator('//span[text()="QA Playground"]');
+    this.miniWebAppsLink = page.locator('//a[text()="Mini Web Apps"]');
+    this.miniWebAppsHeading = page.locator('//h2[text()="Mini Web Apps"]');
   }
-
-  // =============================
-  // Locators (as getters)
-  // =============================
-
-  /** Locator for the main heading "QA Playground" */
-  get headingLocator() {
-    return this.page.locator('//span[text()="QA Playground"]');
-  }
-
-  /** Locator for the "Mini Web Apps" link in the homepage */
-  get miniWebAppsLinkLocator() {
-    return this.page.locator('//a[text()="Mini Web Apps"]');
-  }
-
-  /** Locator for the heading inside the "Mini Web Apps" page */
-  get miniWebAppsHeadingLocator() {
-    return this.page.locator('//h2[text()="Mini Web Apps"]');
-  }
-
-  // =============================
-  // Actions / Methods
-  // =============================
 
   /**
-   * Navigate to a specific URL
-   * @param url {string} - The URL to navigate to
+   * Navigate to a given URL.
+   * @param {string} url - The URL to navigate to.
    */
-  async navigate(url: string) {
+  async navigate(url: string): Promise<void> {
     await this.page.goto(url);
   }
 
   /**
-   * Click on the "Mini Web Apps" link
+   * Click the "Mini Web Apps" link.
    */
-  async clickMiniWebApps() {
-    await this.miniWebAppsLinkLocator.click();
+  async clickMiniWebApps(): Promise<void> {
+    await this.miniWebAppsLink.click();
   }
 
   /**
-   * Verify that the main heading "QA Playground" is visible
+   * Verify that the main heading "QA Playground" is visible.
    */
-  async verifyHeading() {
-    await expect(this.headingLocator).toBeVisible();
+  async verifyHeading(): Promise<void> {
+    await expect(this.heading, 'QA Playground heading should be visible').toBeVisible();
   }
 
   /**
-   * Verify that the "Mini Web Apps" page heading is visible
+   * Verify that the "Mini Web Apps" heading is visible after navigation.
    */
-  async verifyFullCoursesLink() {
-    await expect(this.miniWebAppsHeadingLocator).toBeVisible();
+  async verifyMiniWebAppsHeading(): Promise<void> {
+    await expect(
+      this.miniWebAppsHeading,'Mini Web Apps heading should be visible after clicking the link'
+    ).toBeVisible();
   }
 }

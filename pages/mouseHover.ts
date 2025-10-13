@@ -1,6 +1,10 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
 
+/**
+ * Page Object for the Mouse Hover section.
+ * Handles interactions with movie posters and retrieves movie details.
+ */
 export default class MouseHoverPage extends BasePage {
   readonly sectionHeader: Locator;
   readonly poster: Locator;
@@ -13,6 +17,10 @@ export default class MouseHoverPage extends BasePage {
   readonly expectedCurrentPrice = '$24.96';
   readonly expectedOldPrice = '$38.99';
 
+  /**
+   * Initializes all locators for the Mouse Hover section.
+   * @param {Page} page - Playwright Page object for browser interactions.
+   */
   constructor(page: Page) {
     super(page);
     this.sectionHeader = page.locator('//h3[text()="Mouse Hover"]');
@@ -23,15 +31,35 @@ export default class MouseHoverPage extends BasePage {
     this.buyButton = page.locator('.title-content .buy-btn');
   }
 
-  async openMouseHoverSection() {
+  /**
+   * Clicks the "Mouse Hover" section header to open the section.
+   */
+  async openMouseHoverSection(): Promise<void> {
     await this.sectionHeader.click();
   }
 
-  async hoverOverMovie() {
+  /**
+   * Hovers over the movie poster to reveal details like title, price, and buy button.
+   */
+  async hoverOverMovie(): Promise<void> {
     await this.poster.hover();
   }
 
-  async getMovieDetails() {
+  /**
+   * Retrieves the details of the hovered movie.
+   * @returns {Promise<{title: string | null, current: string | null, old: string | null, buyVisible: boolean}>}
+   *   An object containing:
+   *   - title: The movie title text
+   *   - current: The current price text
+   *   - old: The old price text
+   *   - buyVisible: Whether the buy button is visible
+   */
+  async getMovieDetails(): Promise<{
+    title: string | null;
+    current: string | null;
+    old: string | null;
+    buyVisible: boolean;
+  }> {
     const title = await this.movieTitle.textContent();
     const current = await this.currentPrice.textContent();
     const old = await this.oldPrice.textContent();

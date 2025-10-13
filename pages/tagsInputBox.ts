@@ -1,69 +1,10 @@
-// import { expect, Locator, Page } from '@playwright/test';
-// import BasePage from './basepage';
-
-// export default class HomePage extends BasePage {
-//   readonly page: Page;
-
-//   readonly tagsLink: Locator;
-//   readonly tags: Locator;
-//   readonly remainingCount: Locator;
-//   readonly removeAllButton: Locator;
-//   readonly inputField: Locator;
-
-//   constructor(page: Page) {
-//     super(page);
-//     this.page = page;
-//     this.tagsLink = page.locator('//h3[text()="Tags Input Box"]'); // Open Tags Input Box page
-//     this.inputField = page.locator('.content >> input'); // Input field to add new tags
-//     this.tags = page.locator('.content >> ul >> li'); // All existing tags
-//     this.remainingCount = page.locator('.details >> p >> span'); // Remaining slots
-//     this.removeAllButton = page.locator('.details >> button'); // "Remove All" button
-//   }
-//   // Open Tags Input Box page
-//   async openTagsInputBoxPage() {
-//     await this.tagsLink.click();
-//     await this.page.waitForLoadState('domcontentloaded');
-//   }
-//   // Add a new tag and verify it is visible
-//   async addTag(tag: string) {
-//     await this.inputField.fill(tag);
-//     await this.inputField.press('Enter');
-//     await expect(this.tags.locator(`text=${tag}`)).toBeVisible();
-//   }
-
-//   // Remove the last tag
-//   async removeLastTag() {
-//     const count = await this.tags.count();
-//     if (count > 0) {
-//       await this.tags.nth(count - 1).locator('i').click();
-//     }
-//   }
-
-//   // Remove a specific tag by its text
-//   async removeTag(tagText: string) {
-//     const tagItem = this.tags.locator(`text=${tagText}`);
-//     const removeBtn = tagItem.locator('i');
-//     await removeBtn.click();
-//   }
-
-//   // Remove all tags
-//   async removeAllTags() {
-//     await this.removeAllButton.click();
-//   }
-
-//   // Verify number of tags
-//   async verifyTagsCount(expectedCount: number) {
-//     await expect(this.tags).toHaveCount(expectedCount);
-//   }
-
-//   // Verify remaining slots count
-//   async verifyRemainingCount(expected: number) {
-//     await expect(this.remainingCount).toHaveText(expected.toString());
-//   }
-// }
 import { Locator, Page } from '@playwright/test';
 import BasePage from './basepage';
 
+/**
+ * Page Object for interacting with the Tags Input Box page.
+ * Provides methods to add, remove, and manage tags.
+ */
 export default class TagsInputBoxPage extends BasePage {
   readonly tagsLink: Locator;
   readonly tags: Locator;
@@ -71,51 +12,73 @@ export default class TagsInputBoxPage extends BasePage {
   readonly removeAllButton: Locator;
   readonly inputField: Locator;
 
+  /**
+   * Initializes all locators for the Tags Input Box page.
+   *
+   * @param {Page} page - Playwright Page object for browser interactions.
+   */
   constructor(page: Page) {
     super(page);
-    this.tagsLink = page.locator('//h3[text()="Tags Input Box"]'); // Open Tags Input Box page
-    this.inputField = page.locator('.content >> input'); // Input field to add new tags
-    this.tags = page.locator('.content >> ul >> li'); // All existing tags
-    this.remainingCount = page.locator('.details >> p >> span'); // Remaining slots
-    this.removeAllButton = page.locator('.details >> button'); // "Remove All" button
+    this.tagsLink = page.locator('//h3[text()="Tags Input Box"]'); 
+    this.inputField = page.locator('.content >> input'); 
+    this.tags = page.locator('.content >> ul >> li'); 
+    this.remainingCount = page.locator('.details >> p >> span'); 
+    this.removeAllButton = page.locator('.details >> button'); 
   }
 
-  // -------------------------------
-  // Basic Actions
-  // -------------------------------
-
-  /** Open Tags Input Box page */
-  async openTagsInputBoxPage() {
+  /**
+   * Open the Tags Input Box page.
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
+  async openTagsInputBoxPage(): Promise<void> {
     await this.tagsLink.click();
     await this.page.waitForLoadState('domcontentloaded');
   }
 
-  /** Add a single tag */
-  async addTag(tag: string) {
+  /**
+   * Add a single tag to the input field.
+   *
+   * @async
+   * @param {string} tag - The name of the tag to add.
+   * @returns {Promise<void>}
+   */
+  async addTag(tag: string): Promise<void> {
     await this.inputField.fill(tag);
     await this.inputField.press('Enter');
   }
 
-  /** Remove a specific tag */
-  async removeTag(tagText: string) {
+  /**
+   * Remove a specific tag by its text.
+   *
+   * @async
+   * @param {string} tagText - The text of the tag to remove.
+   * @returns {Promise<void>}
+   */
+  async removeTag(tagText: string): Promise<void> {
     const tagItem = this.tags.locator(`text=${tagText}`);
     await tagItem.locator('i').click();
   }
 
-  /** Remove all tags */
-  async removeAllTags() {
+  /**
+   * Remove all tags at once.
+   *
+   * @async
+   * @returns {Promise<void>}
+   */
+  async removeAllTags(): Promise<void> {
     await this.removeAllButton.click();
   }
 
-  // -------------------------------
-  // Combined Helper Methods
-  // -------------------------------
-
   /**
-   * Clear all tags and add multiple new tags
-   * @param tags Array of tag names to add
+   * Clear all existing tags and add multiple new tags.
+   *
+   * @async
+   * @param {string[]} tags - Array of tag names to add.
+   * @returns {Promise<void>}
    */
-  async addTagsAndReset(tags: string[]) {
+  async addTagsAndReset(tags: string[]): Promise<void> {
     await this.openTagsInputBoxPage();
     await this.removeAllTags();
     for (const tag of tags) {
@@ -124,11 +87,14 @@ export default class TagsInputBoxPage extends BasePage {
   }
 
   /**
-   * Clear all tags, add initial tags, then remove a specific tag
-   * @param initialTags Array of tags to add first
-   * @param removeTagName Tag to remove
+   * Clear all tags, add initial tags, and remove a specific tag.
+   *
+   * @async
+   * @param {string[]} initialTags - Array of tags to add first.
+   * @param {string} removeTagName - The tag to remove after adding initial tags.
+   * @returns {Promise<void>}
    */
-  async removeTagAfterAdding(initialTags: string[], removeTagName: string) {
+  async removeTagAfterAdding(initialTags: string[], removeTagName: string): Promise<void> {
     await this.openTagsInputBoxPage();
     await this.removeAllTags();
     for (const tag of initialTags) {
@@ -138,10 +104,13 @@ export default class TagsInputBoxPage extends BasePage {
   }
 
   /**
-   * Clear all tags and add a single tag
-   * @param tag Tag to add
+   * Clear all tags and add a single tag.
+   *
+   * @async
+   * @param {string} tag - The tag to add after resetting.
+   * @returns {Promise<void>}
    */
-  async resetAndAddSingleTag(tag: string) {
+  async resetAndAddSingleTag(tag: string): Promise<void> {
     await this.openTagsInputBoxPage();
     await this.removeAllTags();
     await this.addTag(tag);
