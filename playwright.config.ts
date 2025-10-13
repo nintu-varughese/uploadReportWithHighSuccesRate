@@ -12,7 +12,7 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
  */
 const reporters: ReporterDescription[] = [
   ['list'], // console output
-  ['html', { open: 'never' }], // HTML report
+  ['html', { open: 'never' }], 
   [
     'allure-playwright',
     {

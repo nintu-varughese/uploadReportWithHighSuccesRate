@@ -252,7 +252,7 @@ test.describe('QA Playground Full Automation Sequence', () => {
     await expect(ratingSliderPage.feedbackMessage, 'Feedback message not visible after clicking Send Feedback').toBeVisible();
   });
 
-test('TC29: Close modal popup if displayed and assert welcome message', async () => {
+  test('TC29: Close modal popup if displayed and assert welcome message', async () => {
   await modalPopUpPage.openModalPopupSection();
   await expect(modalPopUpPage.welcomeMessage,
     'Modal popup welcome message "Welcome Peter Parker!" is not visible.'
@@ -282,7 +282,6 @@ test('TC29: Close modal popup if displayed and assert welcome message', async ()
         }
       }
     }
-
     const finalItems = await sortableList.getAllItemsClasses();
     for (const [index, item] of finalItems.entries()) {
       await expect(item.className, `Sortable list item at index ${index} is not in correct order`).toContain("right");
