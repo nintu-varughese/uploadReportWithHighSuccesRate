@@ -1,10 +1,10 @@
-import { Page, Locator } from '@playwright/test';
-import fs from 'fs';
-import path from 'path';
+import { Page, Locator } from "@playwright/test";
+import fs from "fs";
+import path from "path";
 
 // Read test data JSON
-const testDataPath = path.resolve(__dirname, '../data/testdata.json');
-const testData = JSON.parse(fs.readFileSync(testDataPath, 'utf-8'));
+const testDataPath = path.resolve(__dirname, "../data/testdata.json");
+const testData = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
 
 /**
  * Page Object for the Navigation Menu section.
@@ -25,7 +25,7 @@ export default class NavigationMenuPage {
   constructor(page: Page) {
     this.page = page;
     this.navMenu = page.locator('//h3[text()="Navigation Menu"]');
-    this.pageHeader = page.locator('//h1').nth(1);
+    this.pageHeader = page.locator("//h1").nth(1);
     this.goBackLink = page.locator('//a[text()="Go Back"]');
 
     // Load menu items from test data
@@ -34,7 +34,9 @@ export default class NavigationMenuPage {
     // Initialize locators for all menu items
     this.menuItemLocators = {};
     for (const item of this.pages) {
-      this.menuItemLocators[item] = this.page.locator(`#nav a:text-is("${item}")`);
+      this.menuItemLocators[item] = this.page.locator(
+        `#nav a:text-is("${item}")`
+      );
     }
   }
 
@@ -62,7 +64,7 @@ export default class NavigationMenuPage {
    * @returns {Promise<string>} The header text of the currently opened page
    */
   async getPageHeader(): Promise<string> {
-    return (await this.pageHeader.textContent())?.trim() || '';
+    return (await this.pageHeader.textContent())?.trim() || "";
   }
 
   /**

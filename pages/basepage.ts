@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page } from "@playwright/test";
 
 export default class BasePage {
   protected page: Page;
@@ -14,7 +14,6 @@ export default class BasePage {
   async navigate(url: string) {
     await this.page.goto(url);
   }
-
   /**
    * Navigate to the secondary application URL defined in environment variables.
    * @throws Will throw an error if SECONDARY_BASE_URL is not defined in the .env file.
@@ -22,7 +21,7 @@ export default class BasePage {
   async navigateToSecondaryApp() {
     const secondaryUrl = process.env.SECONDARY_BASE_URL;
     if (!secondaryUrl) {
-      throw new Error('SECONDARY_BASE_URL is not defined in the .env file');
+      throw new Error("SECONDARY_BASE_URL is not defined in the .env file");
     }
     await this.page.goto(secondaryUrl);
   }

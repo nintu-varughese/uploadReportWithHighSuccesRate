@@ -1,5 +1,5 @@
-import { Locator, Page } from '@playwright/test';
-import BasePage from './basepage';
+import { Locator, Page } from "@playwright/test";
+import BasePage from "./basepage";
 
 /**
  * Page Object for the Mouse Hover section.
@@ -13,9 +13,9 @@ export default class MouseHoverPage extends BasePage {
   readonly oldPrice: Locator;
   readonly buyButton: Locator;
 
-  readonly expectedTitle = 'Spider-Man: No Way Home';
-  readonly expectedCurrentPrice = '$24.96';
-  readonly expectedOldPrice = '$38.99';
+  readonly expectedTitle = "Spider-Man: No Way Home";
+  readonly expectedCurrentPrice = "$24.96";
+  readonly expectedOldPrice = "$38.99";
 
   /**
    * Initializes all locators for the Mouse Hover section.
@@ -25,10 +25,10 @@ export default class MouseHoverPage extends BasePage {
     super(page);
     this.sectionHeader = page.locator('//h3[text()="Mouse Hover"]');
     this.poster = page.locator('//img[@class="poster"]');
-    this.movieTitle = page.locator('.title-content h4.movie-title');
-    this.currentPrice = page.locator('.title-content .current-price');
-    this.oldPrice = page.locator('.title-content .old-price');
-    this.buyButton = page.locator('.title-content .buy-btn');
+    this.movieTitle = page.locator(".title-content h4.movie-title");
+    this.currentPrice = page.locator(".title-content .current-price");
+    this.oldPrice = page.locator(".title-content .old-price");
+    this.buyButton = page.locator(".title-content .buy-btn");
   }
 
   /**

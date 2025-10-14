@@ -1,5 +1,5 @@
-import { Page, Locator } from '@playwright/test';
-import BasePage from './basepage';
+import { Page, Locator } from "@playwright/test";
+import BasePage from "./basepage";
 
 /**
  * Page Object for handling different types of alerts:
@@ -27,13 +27,21 @@ export default class DemoAlertPage extends BasePage {
     this.switchToLink = page.locator('//a[text()="SwitchTo"]');
     this.alertsLink = page.locator('//a[text()="Alerts"]');
     this.okTabButton = page.locator('//div[@id="OKTab"]//button');
-    this.confirmAlertLink = page.locator('//a[text()="Alert with OK & Cancel "]');
-    this.confirmAlertButton = page.locator('//button[text()="click the button to display a confirm box "]');
+    this.confirmAlertLink = page.locator(
+      '//a[text()="Alert with OK & Cancel "]'
+    );
+    this.confirmAlertButton = page.locator(
+      '//button[text()="click the button to display a confirm box "]'
+    );
     this.promptAlertLink = page.locator('//a[text()="Alert with Textbox "]');
-    this.promptAlertButton = page.locator('//button[text()="click the button to demonstrate the prompt box "]');
+    this.promptAlertButton = page.locator(
+      '//button[text()="click the button to demonstrate the prompt box "]'
+    );
     this.promptMessage = (text: string) =>
       page.locator(`//p[text()="Hello ${text} How are you today"]`);
-    this.defaultPromptMessage = page.locator('//p[text()="Hello prompt How are you today"]');
+    this.defaultPromptMessage = page.locator(
+      '//p[text()="Hello prompt How are you today"]'
+    );
   }
 
   /**
@@ -44,7 +52,7 @@ export default class DemoAlertPage extends BasePage {
     await this.switchToLink.click();
     await this.alertsLink.click();
 
-    this.page.once('dialog', async dialog => {
+    this.page.once("dialog", async (dialog) => {
       await dialog.accept();
     });
 
@@ -60,7 +68,7 @@ export default class DemoAlertPage extends BasePage {
     await this.alertsLink.click();
     await this.confirmAlertLink.click();
 
-    this.page.once('dialog', async dialog => {
+    this.page.once("dialog", async (dialog) => {
       await dialog.accept();
     });
 
@@ -77,7 +85,7 @@ export default class DemoAlertPage extends BasePage {
     await this.alertsLink.click();
     await this.confirmAlertLink.click();
 
-    this.page.once('dialog', async dialog => {
+    this.page.once("dialog", async (dialog) => {
       await dialog.dismiss();
     });
 
@@ -95,7 +103,7 @@ export default class DemoAlertPage extends BasePage {
     await this.alertsLink.click();
     await this.promptAlertLink.click();
 
-    this.page.once('dialog', async dialog => {
+    this.page.once("dialog", async (dialog) => {
       await dialog.accept(promptText);
     });
 
@@ -112,7 +120,7 @@ export default class DemoAlertPage extends BasePage {
     await this.alertsLink.click();
     await this.promptAlertLink.click();
 
-    this.page.once('dialog', async dialog => {
+    this.page.once("dialog", async (dialog) => {
       await dialog.dismiss();
     });
 

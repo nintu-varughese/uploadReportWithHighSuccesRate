@@ -1,9 +1,9 @@
-import { Locator, Page } from '@playwright/test';
-import BasePage from './basepage';
-import fs from 'fs';
-import path from 'path';
-const testDataPath = path.resolve(__dirname, '../data/testdata.json');
-const testData = JSON.parse(fs.readFileSync(testDataPath, 'utf-8'));
+import { Locator, Page } from "@playwright/test";
+import BasePage from "./basepage";
+import fs from "fs";
+import path from "path";
+const testDataPath = path.resolve(__dirname, "../data/testdata.json");
+const testData = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
 
 /**
  * Page Object for Multi-Level Dropdown interactions.
@@ -15,8 +15,10 @@ export default class MultiLevelDropdownPage extends BasePage {
   readonly settingsLink: Locator;
   readonly animalsLink: Locator;
   readonly subMenuItems: Locator;
-  readonly expectedSettingsSubMenu: string[] = testData.multiLevelDropdown.expectedSettingsSubMenu;
-  readonly expectedAnimalsSubMenu: string[] = testData.multiLevelDropdown.expectedAnimalsSubMenu;
+  readonly expectedSettingsSubMenu: string[] =
+    testData.multiLevelDropdown.expectedSettingsSubMenu;
+  readonly expectedAnimalsSubMenu: string[] =
+    testData.multiLevelDropdown.expectedAnimalsSubMenu;
 
   /**
    * Initializes all locators for the Multi-Level Dropdown page.
@@ -28,7 +30,9 @@ export default class MultiLevelDropdownPage extends BasePage {
     this.iconButton = page.locator('(//a[@class="icon-button"])[4]');
     this.settingsLink = page.locator('//a[@href="#settings"]');
     this.animalsLink = page.locator('//a[@href="#animals"]');
-    this.subMenuItems = page.locator('div.menu.menu-secondary-enter-done > a.menu-item');
+    this.subMenuItems = page.locator(
+      "div.menu.menu-secondary-enter-done > a.menu-item"
+    );
   }
 
   /**
@@ -36,7 +40,7 @@ export default class MultiLevelDropdownPage extends BasePage {
    */
   async openDropdownSection(): Promise<void> {
     await this.dropdownLink.click();
-    await this.page.waitForLoadState('domcontentloaded');
+    await this.page.waitForLoadState("domcontentloaded");
   }
 
   /**
@@ -66,15 +70,15 @@ export default class MultiLevelDropdownPage extends BasePage {
    * @returns {Promise<string[]>} Array of submenu item texts
    */
   async getSubMenuItemsText(): Promise<string[]> {
-    await this.subMenuItems.first().waitFor({ state: 'visible' });
+    await this.subMenuItems.first().waitFor({ state: "visible" });
     const count = await this.subMenuItems.count();
     const texts: string[] = [];
 
     for (let i = 0; i < count; i++) {
       let text = await this.subMenuItems.nth(i).innerText();
       text = text.trim();
-      if (text === 'Settings' || text === 'Animals') continue;
-      text = text.replace(/^[^\w]*(.*)/s, '$1').trim();
+      if (text === "Settings" || text === "Animals") continue;
+      text = text.replace(/^[^\w]*(.*)/s, "$1").trim();
       texts.push(text);
     }
     return texts;
@@ -84,7 +88,10 @@ export default class MultiLevelDropdownPage extends BasePage {
    * Opens Settings submenu and returns current URL and submenu items.
    * @returns {Promise<{ url: string, submenuItems: string[] }>} URL and submenu items text
    */
-  async openSettingsAndGetDetails(): Promise<{ url: string; submenuItems: string[] }> {
+  async openSettingsAndGetDetails(): Promise<{
+    url: string;
+    submenuItems: string[];
+  }> {
     await this.openDropdownSection();
     await this.clickIconButton();
     await this.clickSettings();
@@ -97,7 +104,10 @@ export default class MultiLevelDropdownPage extends BasePage {
    * Opens Animals submenu and returns current URL and submenu items.
    * @returns {Promise<{ url: string, submenuItems: string[] }>} URL and submenu items text
    */
-  async openAnimalsAndGetDetails(): Promise<{ url: string; submenuItems: string[] }> {
+  async openAnimalsAndGetDetails(): Promise<{
+    url: string;
+    submenuItems: string[];
+  }> {
     await this.openDropdownSection();
     await this.clickIconButton();
     await this.clickAnimals();
@@ -122,7 +132,7 @@ export default class MultiLevelDropdownPage extends BasePage {
     await this.openDropdownSection();
     await this.clickIconButton();
     await this.clickSettings();
-    await this.clickSubMenuItem('HTML');
+    await this.clickSubMenuItem("HTML");
   }
 
   /**

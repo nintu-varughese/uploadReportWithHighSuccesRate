@@ -1,5 +1,5 @@
-import { Page, Locator } from '@playwright/test';
-import BasePage from './basepage';
+import { Page, Locator } from "@playwright/test";
+import BasePage from "./basepage";
 
 /**
  * Page Object for the Mini Web Apps section.
@@ -20,10 +20,15 @@ export default class MiniWebApps extends BasePage {
     super(page);
 
     this.dynamicTableHeading = page.locator('//h3[text()="Dynamic Table"]');
-    this.tableHeader = page.locator('text=SUPERHERO');
-    this.spiderManRows = page.locator('tbody#tbody tr', { hasText: 'Spider-Man' });
+    this.tableHeader = page.locator("text=SUPERHERO");
+    this.spiderManRows = page.locator("tbody#tbody tr", {
+      hasText: "Spider-Man",
+    });
     this.fullCoursesLink = page.locator('//a[@aria-label="full courses"]');
-    this.spiderManRealNameCell = this.spiderManRows.locator('td').nth(2).locator('span');
+    this.spiderManRealNameCell = this.spiderManRows
+      .locator("td")
+      .nth(2)
+      .locator("span");
   }
   /**
    * Returns the row(s) containing Spider-Man.

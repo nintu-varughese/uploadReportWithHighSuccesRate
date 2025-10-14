@@ -1,5 +1,5 @@
-import { Locator, Page } from '@playwright/test';
-import BasePage from './basepage';
+import { Locator, Page } from "@playwright/test";
+import BasePage from "./basepage";
 
 /**
  * Page Object for handling Modal Popup interactions.
@@ -18,7 +18,9 @@ export default class ModalPopUpPage extends BasePage {
     super(page);
     this.modalHeading = page.locator('//h3[text()="Onboarding Modal Popup"]');
     this.closeIcon = page.locator('//i[@class="fas fa-bars"]');
-    this.welcomeMessage = page.locator('div.title', { hasText: 'Welcome Peter Parker!' });
+    this.welcomeMessage = page.locator("div.title", {
+      hasText: "Welcome Peter Parker!",
+    });
   }
 
   /**

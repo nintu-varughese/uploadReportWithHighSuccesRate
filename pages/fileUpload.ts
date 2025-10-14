@@ -1,7 +1,7 @@
-import { Page, Locator, Download } from '@playwright/test';
-import path from 'path';
-import fs from 'fs';
-import BasePage from './basepage';
+import { Page, Locator, Download } from "@playwright/test";
+import path from "path";
+import fs from "fs";
+import BasePage from "./basepage";
 
 /**
  * Page Object for handling File Upload and Download operations.
@@ -24,14 +24,16 @@ export default class FileUploadPage extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    this.filePath = path.resolve(__dirname, '../uploadFile.png');
+    this.filePath = path.resolve(__dirname, "../uploadFile.png");
     this.moreMenu = page.locator('//a[text()="More"]');
     this.fileUploadLink = page.locator('//a[text()="File Upload"]');
     this.fileInput = page.locator('//input[@id="input-4"]');
-    this.uploadSuccess = page.locator('//span[text()="Upload"]'); 
+    this.uploadSuccess = page.locator('//span[text()="Upload"]');
     this.fileDownloadLink = page.locator('//a[text()="File Download"]');
     this.textArea = page.locator('//textarea[@id="textbox"]');
-    this.generateFileButton = page.locator('(//button[text()="Generate File"])[1]');
+    this.generateFileButton = page.locator(
+      '(//button[text()="Generate File"])[1]'
+    );
     this.downloadLink = page.locator('//a[@id="link-to-download"]');
   }
 
@@ -44,7 +46,7 @@ export default class FileUploadPage extends BasePage {
     await this.moreMenu.click();
     await this.fileUploadLink.click();
     await this.fileInput.setInputFiles(this.filePath);
-    await this.uploadSuccess.waitFor({ state: 'visible', timeout: 5000 });
+    await this.uploadSuccess.waitFor({ state: "visible", timeout: 5000 });
     return this.uploadSuccess;
   }
 }

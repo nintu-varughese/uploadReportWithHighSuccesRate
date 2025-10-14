@@ -1,5 +1,5 @@
-import { Page, Locator } from '@playwright/test';
-import BasePage from './basepage';
+import { Page, Locator } from "@playwright/test";
+import BasePage from "./basepage";
 
 /**
  * Page Object for handling Drag and Drop interactions
@@ -40,33 +40,59 @@ export default class DragDropPage extends BasePage {
     this.staticTab = page.locator('//a[text()="Static "]');
     this.dynamicTab = page.locator('//a[text()="Dynamic "]');
     this.dropArea = page.locator('//div[@id="droparea"]');
-    this.staticAngularImg = page.locator('//div[@id="dragarea"]//img[@id="angular"]');
-    this.staticMongoImg = page.locator('//div[@id="dragarea"]//img[@id="mongo"]');
+    this.staticAngularImg = page.locator(
+      '//div[@id="dragarea"]//img[@id="angular"]'
+    );
+    this.staticMongoImg = page.locator(
+      '//div[@id="dragarea"]//img[@id="mongo"]'
+    );
     this.staticNodeImg = page.locator('//div[@id="dragarea"]//img[@id="node"]');
-    this.staticImages = [this.staticAngularImg, this.staticMongoImg, this.staticNodeImg];
-    this.droppedStaticAngularImg = page.locator('//div[@id="droparea"]//img[@id="angular"]');
-    this.droppedStaticMongoImg = page.locator('//div[@id="droparea"]//img[@id="mongo"]');
-    this.droppedStaticNodeImg = page.locator('//div[@id="droparea"]//img[@id="node"]');
+    this.staticImages = [
+      this.staticAngularImg,
+      this.staticMongoImg,
+      this.staticNodeImg,
+    ];
+    this.droppedStaticAngularImg = page.locator(
+      '//div[@id="droparea"]//img[@id="angular"]'
+    );
+    this.droppedStaticMongoImg = page.locator(
+      '//div[@id="droparea"]//img[@id="mongo"]'
+    );
+    this.droppedStaticNodeImg = page.locator(
+      '//div[@id="droparea"]//img[@id="node"]'
+    );
     this.droppedStaticImages = [
       this.droppedStaticAngularImg,
       this.droppedStaticMongoImg,
-      this.droppedStaticNodeImg
+      this.droppedStaticNodeImg,
     ];
-    this.dynamicOriginalAngularImg = page.locator('//div[@id="dragarea"]//img[@id="angular"]');
-    this.dynamicOriginalMongoImg = page.locator('//div[@id="dragarea"]//img[@id="mongo"]');
-    this.dynamicOriginalNodeImg = page.locator('//div[@id="dragarea"]//img[@id="node"]');
+    this.dynamicOriginalAngularImg = page.locator(
+      '//div[@id="dragarea"]//img[@id="angular"]'
+    );
+    this.dynamicOriginalMongoImg = page.locator(
+      '//div[@id="dragarea"]//img[@id="mongo"]'
+    );
+    this.dynamicOriginalNodeImg = page.locator(
+      '//div[@id="dragarea"]//img[@id="node"]'
+    );
     this.dynamicOriginalImages = [
       this.dynamicOriginalAngularImg,
       this.dynamicOriginalMongoImg,
-      this.dynamicOriginalNodeImg
+      this.dynamicOriginalNodeImg,
     ];
-    this.dynamicDroppedAngularImg = page.locator('//div[@id="droparea"]//img[@id="angular"]');
-    this.dynamicDroppedMongoImg = page.locator('//div[@id="droparea"]//img[@id="mongo"]');
-    this.dynamicDroppedNodeImg = page.locator('//div[@id="droparea"]//img[@id="node"]');
+    this.dynamicDroppedAngularImg = page.locator(
+      '//div[@id="droparea"]//img[@id="angular"]'
+    );
+    this.dynamicDroppedMongoImg = page.locator(
+      '//div[@id="droparea"]//img[@id="mongo"]'
+    );
+    this.dynamicDroppedNodeImg = page.locator(
+      '//div[@id="droparea"]//img[@id="node"]'
+    );
     this.dynamicDroppedImages = [
       this.dynamicDroppedAngularImg,
       this.dynamicDroppedMongoImg,
-      this.dynamicDroppedNodeImg
+      this.dynamicDroppedNodeImg,
     ];
   }
 
@@ -80,10 +106,10 @@ export default class DragDropPage extends BasePage {
     await this.interactionsLink.click();
     await this.dragDropLink.click();
     await this.staticTab.click();
-    await this.dropArea.waitFor({ state: 'visible' });
+    await this.dropArea.waitFor({ state: "visible" });
 
     for (const img of this.staticImages) {
-      await img.waitFor({ state: 'visible' });
+      await img.waitFor({ state: "visible" });
       await img.dragTo(this.dropArea);
     }
   }
@@ -98,10 +124,10 @@ export default class DragDropPage extends BasePage {
     await this.interactionsLink.click();
     await this.dragDropLink.click();
     await this.dynamicTab.click();
-    await this.dropArea.waitFor({ state: 'visible' });
+    await this.dropArea.waitFor({ state: "visible" });
 
     for (const img of this.dynamicOriginalImages) {
-      await img.waitFor({ state: 'visible' });
+      await img.waitFor({ state: "visible" });
       await img.dragTo(this.dropArea);
     }
   }

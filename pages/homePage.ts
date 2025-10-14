@@ -1,5 +1,5 @@
-import { expect, Locator, Page } from '@playwright/test';
-import BasePage from './basepage';
+import { expect, Locator, Page } from "@playwright/test";
+import BasePage from "./basepage";
 
 /**
  * Page Object for the Home Page of QA Playground.
@@ -40,7 +40,10 @@ export default class HomePage extends BasePage {
    * Verify that the main heading "QA Playground" is visible.
    */
   async verifyHeading(): Promise<void> {
-    await expect(this.heading, 'QA Playground heading should be visible').toBeVisible();
+    await expect(
+      this.heading,
+      "QA Playground heading should be visible"
+    ).toBeVisible();
   }
 
   /**
@@ -48,7 +51,8 @@ export default class HomePage extends BasePage {
    */
   async verifyMiniWebAppsHeading(): Promise<void> {
     await expect(
-      this.miniWebAppsHeading,'Mini Web Apps heading should be visible after clicking the link'
+      this.miniWebAppsHeading,
+      "Mini Web Apps heading should be visible after clicking the link"
     ).toBeVisible();
   }
 }

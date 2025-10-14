@@ -41,7 +41,7 @@ export default class RatingRangeSliderPage extends BasePage {
     }
 
     // Optional: wait for progress bar to update
-    await expect(this.progressBar).toBeVisible();
+    await expect(this.progressBar, "Progress bar is not visible after moving the slider").toBeVisible();
   }
 
   /** Step 3: Click the Feedback button */

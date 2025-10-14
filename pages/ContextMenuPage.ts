@@ -1,5 +1,5 @@
-import { expect, Page, Locator } from '@playwright/test';
-import BasePage from './basepage';
+import { expect, Page, Locator } from "@playwright/test";
+import BasePage from "./basepage";
 
 export default class ContextMenuPage extends BasePage {
   private readonly contextMenuSection: Locator;
@@ -9,15 +9,17 @@ export default class ContextMenuPage extends BasePage {
   constructor(page: Page) {
     super(page);
 
-    this.contextMenuSection = page.locator('//h3[text()="Right-Click Context Menu"]');
+    this.contextMenuSection = page.locator(
+      '//h3[text()="Right-Click Context Menu"]'
+    );
     this.messageLocator = page.locator('//div[@id="message"]');
-
     /**
      * Dynamic locator generator for context menu items.
      * @param menu - The visible text of the context menu item.
      * @returns A Locator object for the specified menu item.
      */
-    this.contextMenuItem = (menu: string) =>page.locator(`//div[@class="menu"]//li[text()="${menu}"]`);
+    this.contextMenuItem = (menu: string) =>
+      page.locator(`//div[@class="menu"]//li[text()="${menu}"]`);
   }
 
   /**
@@ -25,7 +27,10 @@ export default class ContextMenuPage extends BasePage {
    * Waits until the section becomes visible and clicks to open it.
    */
   async openContextMenuSection(): Promise<void> {
-    await expect(this.contextMenuSection).toBeVisible({ timeout: 10000 });
+    await expect(
+      this.contextMenuSection,
+      "Context menu section is not visible"
+    ).toBeVisible({ timeout: 10000 });
     await this.contextMenuSection.click();
   }
 
@@ -35,9 +40,12 @@ export default class ContextMenuPage extends BasePage {
    */
   async rightClickTarget(targetLocator: string): Promise<void> {
     const target = this.page.locator(targetLocator);
-    await expect(target).toBeVisible({ timeout: 10000 });
+    await expect(
+      target,
+      `Target element "${targetLocator}" is not visible`
+    ).toBeVisible({ timeout: 10000 });
     await target.scrollIntoViewIfNeeded();
-    await target.click({ button: 'right' });
+    await target.click({ button: "right" });
   }
 
   /**
@@ -46,7 +54,10 @@ export default class ContextMenuPage extends BasePage {
    */
   async menuItemClick(menu: string): Promise<void> {
     const menuItem = this.contextMenuItem(menu);
-    await expect(menuItem).toBeVisible({ timeout: 5000 });
+    await expect(
+      menuItem,
+      `Context menu item "${menu}" is not visible`
+    ).toBeVisible({ timeout: 5000 });
     await menuItem.click();
   }
 
@@ -57,7 +68,10 @@ export default class ContextMenuPage extends BasePage {
    */
   async menuItemHover(menu: string): Promise<void> {
     const menuItem = this.contextMenuItem(menu);
-    await expect(menuItem).toBeVisible({ timeout: 5000 });
+    await expect(
+      menuItem,
+      `Context menu item "${menu}" is not visible for hover`
+    ).toBeVisible({ timeout: 5000 });
     await menuItem.hover();
   }
 
