@@ -17,17 +17,8 @@ export default class RedirectChainPage {
    */
   constructor(page: Page) {
     this.page = page;
-
-    /** Locator for the "Redirect Chain" section header */
     this.redirectHeader = page.locator('//h3[text()="Redirect Chain"]');
-
-    /** Locator for the redirect link that starts the redirect sequence */
     this.redirectLink = page.locator('//a[@id="redirect"]');
-
-    /** 
-     * Locators for each sequential page message during the redirect chain process.
-     * These messages appear one by one as the browser navigates through redirects.
-     */
     this.messageLocators = [
       page.locator('//p[text()="Welcome to Second Page"]'),
       page.locator('//p[text()="Welcome to Third Page"]'),
@@ -36,8 +27,6 @@ export default class RedirectChainPage {
       page.locator('//p[text()="Welcome to Sixth Page"]'),
       page.locator('//p[text()="Welcome to the Last Page"]'),
     ];
-
-    /** Locator for the "Go Back" button available on the final redirect page */
     this.goBackButton = page.locator('//a[text()="Go Back"]');
   }
 
@@ -57,6 +46,6 @@ export default class RedirectChainPage {
   async clickRedirectLink(): Promise<void> {
     await this.redirectLink.click();
     // Wait a few seconds for multiple redirects to complete before assertions
-    await this.page.waitForTimeout(5000);
+      await this.goBackButton.waitFor({ state: "visible"});
   }
 }

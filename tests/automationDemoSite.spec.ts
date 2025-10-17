@@ -1,139 +1,106 @@
-import { test, expect, Page } from "@playwright/test";
-import BasePage from "../pages/basepage";
-import DemoAlertPage from "../pages/demoAlert";
-import DragDropPage from "../pages/dragDropPage";
-import FileUploadPage from "../pages/fileUpload";
-import { FileDownloadPage } from "../pages/fileDownload";
+import { test, expect } from '../pages/customFixture';
 
-test.describe("Web Component Functionality Tests in Automation Demo Site Application", () => {
-  let basePage: BasePage;
-  let demoAlertPage: DemoAlertPage;
-  let dragDropPage: DragDropPage;
-  let fileUploadPage: FileUploadPage;
+test.describe('Automation Demo Site - Web Component Functional Tests', () => {
 
-  test.beforeEach(async ({ page }) => {
-    basePage = new BasePage(page);
-    demoAlertPage = new DemoAlertPage(page);
-    dragDropPage = new DragDropPage(page);
-    fileUploadPage = new FileUploadPage(page);
-
-    await basePage.navigateToSecondaryApp();
-  });
-
-  test.describe("Alert Functionality", () => {
-    test("TC01: Simple Alert - Verify alert can be accepted", async () => {
-      const handled = await demoAlertPage.handleAlertFlow();
-      await expect(
-        handled,
-        "Simple alert was not handled correctly"
-      ).toBeTruthy();
-    });
-
-    test("TC02: Confirm Alert - Click OK and verify confirmation", async () => {
-      const handled = await demoAlertPage.handleConfirmAlertOk();
-      await expect(
-        handled,
-        "Confirm alert OK was not handled correctly"
-      ).toBeTruthy();
-    });
-
-    test("TC03: Confirm Alert - Click Cancel and verify cancellation", async () => {
-      const handled = await demoAlertPage.handleConfirmAlertCancel();
-      await expect(
-        handled,
-        "Confirm alert Cancel was not handled correctly"
-      ).toBeTruthy();
-    });
-
-    test("TC04: Prompt Alert - Enter text and click OK, verify message", async () => {
-      const inputText = "Hello!";
-      const isVisible = await demoAlertPage.handlePromptAlertOk(inputText);
-      await expect(
-        isVisible,
-        `Prompt alert message for input "${inputText}" is not visible`
-      ).toBeTruthy();
-    });
-
-    test("TC05: Prompt Alert - Click Cancel and verify message is not displayed", async () => {
-      const isNotVisible = await demoAlertPage.handlePromptAlertCancel();
-      await expect(
-        isNotVisible,
-        "Prompt alert message should not be visible after Cancel"
-      ).toBeTruthy();
+  test.beforeEach(async ({ basePage }) => {
+    await test.step('Navigate to the Automation Demo secondary application', async () => {
+      await basePage.navigateToSecondaryApp();
     });
   });
 
-  test.describe("File Upload and Download", () => {
-    test("TC06: File Upload - Upload a file and verify success", async ({
-      page,
-    }) => {
-      const fileUploadPage = new FileUploadPage(page);
-      const uploadLocator = await fileUploadPage.uploadFile();
-      const isVisible = await uploadLocator.isVisible();
-      await expect(
-        isVisible,
-        "File upload success message was not visible after uploading the file"
-      ).toBeTruthy();
+  test.describe('Alert Functionality Tests', () => {
+
+    test('TC01: Simple Alert - Verify that a simple alert can be accepted', async ({ demoAlertPage }) => {
+      await test.step('Click the OK button on a simple alert and handle the dialog', async () => {
+        const handled = await demoAlertPage.handleAlertFlow();
+        await expect(handled).toBeTruthy();
+      });
     });
 
-    test("TC07: File Download - Generate TXT file, download, verify content, and clean up", async ({
-      page,
-    }) => {
-      const fileDownloadPage = new FileDownloadPage(page);
-      await fileDownloadPage.navigateToFileDownload();
-      const sampleData = "Automation Test Data";
-      await fileDownloadPage.enterText(sampleData);
-      await fileDownloadPage.clickCreateButton();
-      const filePath = await fileDownloadPage.downloadFile();
-      expect(
-        fileDownloadPage.fileExists(filePath),
-        `File was not found at path: ${filePath}`
-      ).toBeTruthy();
-      expect(
-        filePath.endsWith(".txt"),
-        `Downloaded file does not have a .txt extension: ${filePath}`
-      ).toBeTruthy();
-      const content = fileDownloadPage.readFile(filePath);
-      expect(
-        content.trim(),
-        `File content does not match expected. Expected: "${sampleData}", Actual: "${content.trim()}"`
-      ).toBe(sampleData.trim());
+    test('TC02: Confirm Alert - Verify that clicking OK confirms the alert', async ({ demoAlertPage }) => {
+      await test.step('Click the OK button on a confirm alert and handle the dialog', async () => {
+        const handled = await demoAlertPage.handleConfirmAlertOk();
+        await expect(handled).toBeTruthy();
+      });
     });
+
+    test('TC03: Confirm Alert - Verify that clicking Cancel dismisses the alert', async ({ demoAlertPage }) => {
+      await test.step('Click the Cancel button on a confirm alert and handle the dialog', async () => {
+        const handled = await demoAlertPage.handleConfirmAlertCancel();
+        await expect(handled).toBeTruthy();
+      });
+    });
+
+    test('TC04: Prompt Alert - Verify that entering text and clicking OK displays the correct message', async ({ demoAlertPage }) => {
+      await test.step('Enter text into the prompt alert and accept it', async () => {
+        const inputText = 'Hello!';
+        const isVisible = await demoAlertPage.handlePromptAlertOk(inputText);
+        await expect(isVisible).toBeTruthy();
+      });
+    });
+
+    test('TC05: Prompt Alert - Verify that clicking Cancel does not display the prompt message', async ({ demoAlertPage }) => {
+      await test.step('Dismiss the prompt alert without entering any text', async () => {
+        const isNotVisible = await demoAlertPage.handlePromptAlertCancel();
+        await expect(isNotVisible).toBeTruthy();
+      });
+    });
+
   });
 
-  test.describe("Drag and Drop Functionality", () => {
-    test("TC08: Static Drag and Drop - Drag all images to drop area and verify", async ({
-      page,
-    }) => {
-      const dragDropPage = new DragDropPage(page);
-      await dragDropPage.dragAndDropStaticImages();
+  test.describe('File Upload and Download Tests', () => {
 
-      for (const img of dragDropPage.droppedStaticImages) {
-        const isVisible = await img.isVisible();
-        await expect(
-          isVisible,
-          `Static drag-and-drop failed: Image "${await img.getAttribute(
-            "id"
-          )}" not visible in drop area`
-        ).toBeTruthy();
-      }
+    test('TC06: File Upload - Verify that a file can be uploaded successfully', async ({ fileUploadPage }) => {
+      await test.step('Navigate to the File Upload section and upload the test file', async () => {
+        const uploadLocator = await fileUploadPage.uploadFile();
+        await expect(await uploadLocator.isVisible()).toBeTruthy();
+      });
     });
 
-    test("TC09: Dynamic Drag and Drop - Drag all images to drop area and verify", async ({
-      page,
-    }) => {
-      const dragDropPage = new DragDropPage(page);
-      await dragDropPage.dragAndDropDynamicImages();
+    test('TC07: File Download - Verify that a text file can be generated, downloaded, and its content verified', async ({ fileDownloadPage }) => {
+      await test.step('Navigate to the File Download section, enter text, and generate a text file', async () => {
+        await fileDownloadPage.navigateToFileDownload();
+        const sampleData = 'Automation Test Data';
+        await fileDownloadPage.enterText(sampleData);
+        await fileDownloadPage.clickCreateButton();
+      });
 
-      for (const img of dragDropPage.dynamicDroppedImages) {
-        const isVisible = await img.isVisible();
-        await expect(
-          isVisible,
-          `Dynamic drag-and-drop failed: Image "${await img.getAttribute(
-            "id"
-          )}" not visible in drop area`
-        ).toBeTruthy();
-      }
+      await test.step('Download the generated file and verify the file exists, has correct extension, and contains the expected text', async () => {
+        const filePath = await fileDownloadPage.downloadFile();
+        expect(fileDownloadPage.fileExists(filePath)).toBeTruthy();
+        expect(filePath.endsWith('.txt')).toBeTruthy();
+        expect(fileDownloadPage.readFile(filePath).trim()).toBe('Automation Test Data');
+      });
     });
+
   });
+
+  test.describe('Drag and Drop Functionality Tests', () => {
+
+    test('TC08: Static Drag and Drop - Verify that all static images can be dragged and dropped correctly', async ({ dragDropPage }) => {
+      await test.step('Navigate to the Static Drag and Drop section and drag all images to the drop area', async () => {
+        await dragDropPage.dragAndDropStaticImages();
+      });
+
+      await test.step('Verify that all static images are visible in the drop area after drag and drop', async () => {
+        for (const img of dragDropPage.droppedStaticImages) {
+          await expect(await img.isVisible()).toBeTruthy();
+        }
+      });
+    });
+
+    test('TC09: Dynamic Drag and Drop - Verify that all dynamic images can be dragged and dropped correctly', async ({ dragDropPage }) => {
+      await test.step('Navigate to the Dynamic Drag and Drop section and drag all images to the drop area', async () => {
+        await dragDropPage.dragAndDropDynamicImages();
+      });
+
+      await test.step('Verify that all dynamic images are visible in the drop area after drag and drop', async () => {
+        for (const img of dragDropPage.dynamicDroppedImages) {
+          await expect(await img.isVisible()).toBeTruthy();
+        }
+      });
+    });
+
+  });
+
 });

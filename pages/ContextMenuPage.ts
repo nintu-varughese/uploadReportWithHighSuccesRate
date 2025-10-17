@@ -1,5 +1,5 @@
 import { expect, Page, Locator } from "@playwright/test";
-import BasePage from "./basepage";
+import BasePage from "./basePage";
 
 export default class ContextMenuPage extends BasePage {
   private readonly contextMenuSection: Locator;
@@ -33,7 +33,6 @@ export default class ContextMenuPage extends BasePage {
     ).toBeVisible({ timeout: 10000 });
     await this.contextMenuSection.click();
   }
-
   /**
    * Performs a right-click (context click) action on the given target element.
    * @param targetLocator - The XPath or CSS selector of the element to right-click.

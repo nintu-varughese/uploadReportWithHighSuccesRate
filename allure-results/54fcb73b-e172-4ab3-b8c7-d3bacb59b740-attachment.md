@@ -1,0 +1,221 @@
+# Page snapshot
+
+```yaml
+- generic [active] [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e5]:
+      - link "image not displaying" [ref=e7] [cursor=pointer]:
+        - /url: http://www.automationtesting.in
+        - img "image not displaying" [ref=e8]
+      - heading "Automation Demo Site" [level=1] [ref=e10]
+    - navigation [ref=e11]:
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Home" [ref=e16] [cursor=pointer]:
+            - /url: Index.html
+        - listitem [ref=e17]:
+          - link "Register" [ref=e18] [cursor=pointer]:
+            - /url: Register.html
+        - listitem [ref=e19]:
+          - link "WebTable" [ref=e20] [cursor=pointer]:
+            - /url: WebTable.html
+        - listitem [ref=e21]:
+          - link "SwitchTo" [ref=e22] [cursor=pointer]:
+            - /url: SwitchTo.html
+          - generic [ref=e23]: 
+        - listitem [ref=e24]:
+          - link "Widgets" [ref=e25] [cursor=pointer]:
+            - /url: Widgets.html
+          - generic [ref=e26]: 
+        - listitem [ref=e27]:
+          - link "Interactions" [ref=e28] [cursor=pointer]:
+            - /url: Interactions.html
+          - generic [ref=e29]: 
+        - listitem [ref=e30]:
+          - link "Video" [ref=e31] [cursor=pointer]:
+            - /url: SwitchTo.html
+          - generic [ref=e32]: 
+        - listitem [ref=e33]:
+          - link "WYSIWYG" [ref=e34] [cursor=pointer]:
+            - /url: WYSIWYG.html
+          - generic [ref=e35]: 
+        - listitem [ref=e36]:
+          - link "More" [ref=e37] [cursor=pointer]:
+            - /url: "#"
+          - generic [ref=e38]: 
+        - listitem [ref=e39]:
+          - link "Practice Site" [ref=e40] [cursor=pointer]:
+            - /url: http://practice.automationtesting.in/
+  - generic [ref=e44]:
+    - list [ref=e46]:
+      - listitem [ref=e47]:
+        - link "Open New Tabbed Windows" [ref=e48]:
+          - /url: "#Tabbed"
+      - listitem [ref=e49]:
+        - link "Open New Seperate Windows" [ref=e50] [cursor=pointer]:
+          - /url: "#Seperate"
+      - listitem [ref=e51]:
+        - link "Open Seperate Multiple Windows" [ref=e52] [cursor=pointer]:
+          - /url: "#Multiple"
+    - generic [ref=e53]:
+      - paragraph [ref=e54]: If you set the target attribute to "_blank" , the link will open in a new browser window or a new tab
+      - link "click" [ref=e55] [cursor=pointer]:
+        - /url: http://www.selenium.dev
+        - button "click" [ref=e56]
+  - generic [ref=e58]:
+    - insertion [ref=e61]:
+      - generic [ref=e63]:
+        - generic "These are topics related to the article that might interest you" [ref=e64]: Discover more
+        - link "Find automation training courses" [ref=e65] [cursor=pointer]:
+          - img [ref=e67]
+          - text: Find automation training courses
+        - link "Responsive design services" [ref=e69] [cursor=pointer]:
+          - img [ref=e71]
+          - text: Responsive design services
+        - link "Web browser" [ref=e73] [cursor=pointer]:
+          - img [ref=e75]
+          - text: Web browser
+        - link "Website builders" [ref=e77] [cursor=pointer]:
+          - img [ref=e79]
+          - text: Website builders
+        - link "Hire freelance QA testers" [ref=e81] [cursor=pointer]:
+          - img [ref=e83]
+          - text: Hire freelance QA testers
+        - link "Purchase Selenium WebDriver course" [ref=e85] [cursor=pointer]:
+          - img [ref=e87]
+          - text: Purchase Selenium WebDriver course
+        - link "Windows cloud services" [ref=e89] [cursor=pointer]:
+          - img [ref=e91]
+          - text: Windows cloud services
+        - link "Test automation" [ref=e93] [cursor=pointer]:
+          - img [ref=e95]
+          - text: Test automation
+        - link "Find QA automation jobs" [ref=e97] [cursor=pointer]:
+          - img [ref=e99]
+          - text: Find QA automation jobs
+        - link "Windows PC laptops" [ref=e101] [cursor=pointer]:
+          - img [ref=e103]
+          - text: Windows PC laptops
+    - insertion [ref=e107]:
+      - generic [ref=e109]:
+        - generic "These are topics related to the article that might interest you" [ref=e110]: Discover more
+        - link "Drag and drop library" [ref=e111] [cursor=pointer]:
+          - img [ref=e113]
+          - text: Drag and drop library
+        - link "API testing tools" [ref=e115] [cursor=pointer]:
+          - img [ref=e117]
+          - text: API testing tools
+        - link "Automation testing frameworks" [ref=e119] [cursor=pointer]:
+          - img [ref=e121]
+          - text: Automation testing frameworks
+        - link "Programming language tutorials" [ref=e123] [cursor=pointer]:
+          - img [ref=e125]
+          - text: Programming language tutorials
+        - link "JavaScript alerts guide" [ref=e127] [cursor=pointer]:
+          - img [ref=e129]
+          - text: JavaScript alerts guide
+        - link "Slider widget" [ref=e131] [cursor=pointer]:
+          - img [ref=e133]
+          - text: Slider widget
+        - link "WYSIWYG editor integration" [ref=e135] [cursor=pointer]:
+          - img [ref=e137]
+          - text: WYSIWYG editor integration
+        - link "Automation Testing" [ref=e139] [cursor=pointer]:
+          - img [ref=e141]
+          - text: Automation Testing
+        - link "Browser window management" [ref=e143] [cursor=pointer]:
+          - img [ref=e145]
+          - text: Browser window management
+        - link "Mobile app testing services" [ref=e147] [cursor=pointer]:
+          - img [ref=e149]
+          - text: Mobile app testing services
+    - insertion [ref=e153]:
+      - generic [ref=e155]:
+        - generic "These are topics related to the article that might interest you" [ref=e156]: Discover more
+        - link "Testing" [ref=e157] [cursor=pointer]:
+          - img [ref=e159]
+          - text: Testing
+        - link "Windows cloud services" [ref=e161] [cursor=pointer]:
+          - img [ref=e163]
+          - text: Windows cloud services
+        - link "Find automation training courses" [ref=e165] [cursor=pointer]:
+          - img [ref=e167]
+          - text: Find automation training courses
+        - link "Get software testing certification" [ref=e169] [cursor=pointer]:
+          - img [ref=e171]
+          - text: Get software testing certification
+        - link "Microsoft Office suite" [ref=e173] [cursor=pointer]:
+          - img [ref=e175]
+          - text: Microsoft Office suite
+        - link "Buy programming books online" [ref=e177] [cursor=pointer]:
+          - img [ref=e179]
+          - text: Buy programming books online
+        - link "Test automation" [ref=e181] [cursor=pointer]:
+          - img [ref=e183]
+          - text: Test automation
+        - link "Buy cloud testing services" [ref=e185] [cursor=pointer]:
+          - img [ref=e187]
+          - text: Buy cloud testing services
+        - link "Purchase test automation consultancy" [ref=e189] [cursor=pointer]:
+          - img [ref=e191]
+          - text: Purchase test automation consultancy
+        - link "Windows 11 upgrade" [ref=e193] [cursor=pointer]:
+          - img [ref=e195]
+          - text: Windows 11 upgrade
+    - insertion [ref=e199]:
+      - generic [ref=e201]:
+        - generic "These are topics related to the article that might interest you" [ref=e202]: Discover more
+        - link "Website builders" [ref=e203] [cursor=pointer]:
+          - img [ref=e205]
+          - text: Website builders
+        - link "Windows cloud services" [ref=e207] [cursor=pointer]:
+          - img [ref=e209]
+          - text: Windows cloud services
+        - link "JavaScript libraries" [ref=e211] [cursor=pointer]:
+          - img [ref=e213]
+          - text: JavaScript libraries
+        - link "Hire freelance QA testers" [ref=e215] [cursor=pointer]:
+          - img [ref=e217]
+          - text: Hire freelance QA testers
+        - link "Software Testing" [ref=e219] [cursor=pointer]:
+          - img [ref=e221]
+          - text: Software Testing
+        - link "Testing" [ref=e223] [cursor=pointer]:
+          - img [ref=e225]
+          - text: Testing
+        - link "Buy testing framework licenses" [ref=e227] [cursor=pointer]:
+          - img [ref=e229]
+          - text: Buy testing framework licenses
+        - link "Web development tools" [ref=e231] [cursor=pointer]:
+          - img [ref=e233]
+          - text: Web development tools
+        - link "Windows PC laptops" [ref=e235] [cursor=pointer]:
+          - img [ref=e237]
+          - text: Windows PC laptops
+        - link "Compare software testing platforms" [ref=e239] [cursor=pointer]:
+          - img [ref=e241]
+          - text: Compare software testing platforms
+    - contentinfo [ref=e244]:
+      - generic [ref=e246]:
+        - generic [ref=e247]:
+          - text: "\"@ 2016\""
+          - link "Automation Testing" [ref=e248] [cursor=pointer]:
+            - /url: "#"
+          - text: "\"All Rights Reserved.\""
+        - generic [ref=e249]:
+          - link "" [ref=e250] [cursor=pointer]:
+            - /url: https://www.facebook.com/automationtesting2016/
+            - generic [ref=e251]: 
+          - link "" [ref=e252] [cursor=pointer]:
+            - /url: https://twitter.com/krishnasakinala
+            - generic [ref=e253]: 
+          - link "" [ref=e254] [cursor=pointer]:
+            - /url: https://www.linkedin.com/nhome/?trk=hb_signin
+            - generic [ref=e255]: 
+          - link "" [ref=e256] [cursor=pointer]:
+            - /url: https://plus.google.com/105286300926085335367
+            - generic [ref=e257]: 
+          - link "" [ref=e258] [cursor=pointer]:
+            - /url: https://www.youtube.com/channel/UCmQRa3pWM9zsB474URz8ESg
+            - generic [ref=e259]: 
+```

@@ -11,18 +11,18 @@ dotenv.config({ path: path.resolve(__dirname, '.env') });
  * Allure Reporter configuration
  */
 const reporters: ReporterDescription[] = [
-  ['list'], // console output
-  ['html', { open: 'never' }], 
+  ['list'],
+  ['html', { open: 'never' }],
   [
     'allure-playwright',
     {
-     outputFolder: 'allure-results',
-    detail: false,
-    suiteTitle: false,
-    useCucumberStepReporter: false,
-    useStepsForHooks: false,
-    screenshots: 'on',
-    videos: 'on'
+      outputFolder: 'artifacts/allure-results',
+      detail: false,
+      suiteTitle: false,
+      useCucumberStepReporter: false,
+      useStepsForHooks: false,
+      screenshots: 'on',
+      videos: 'on',
     },
   ],
 ];
@@ -42,7 +42,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL,
     trace: 'on-first-retry',
     screenshot: 'on',
-    //headless:false,
+    headless:false,
 
     // Record videos for all tests
     video: 'on',
@@ -63,7 +63,6 @@ export default defineConfig({
       //name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
     },
-    // Uncomment to enable other browsers
     // {
     //   name: 'firefox',
     //   use: { ...devices['Desktop Firefox'] },

@@ -1,0 +1,219 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e5]:
+      - link "image not displaying" [ref=e7] [cursor=pointer]:
+        - /url: http://www.automationtesting.in
+        - img "image not displaying" [ref=e8]
+      - heading "Automation Demo Site" [level=1] [ref=e10]
+    - navigation [ref=e11]:
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Home" [ref=e16] [cursor=pointer]:
+            - /url: Index.html
+        - listitem [ref=e17]:
+          - link "Register" [ref=e18] [cursor=pointer]:
+            - /url: Register.html
+        - listitem [ref=e19]:
+          - link "WebTable" [ref=e20] [cursor=pointer]:
+            - /url: WebTable.html
+        - listitem [ref=e21]:
+          - link "SwitchTo" [ref=e22] [cursor=pointer]:
+            - /url: SwitchTo.html
+          - generic [ref=e23]: 
+        - listitem [ref=e24]:
+          - link "Widgets" [ref=e25] [cursor=pointer]:
+            - /url: Widgets.html
+          - generic [ref=e26]: 
+        - listitem [ref=e27]:
+          - link "Interactions" [ref=e28] [cursor=pointer]:
+            - /url: Interactions.html
+          - generic [ref=e29]: 
+        - listitem [ref=e30]:
+          - link "Video" [ref=e31] [cursor=pointer]:
+            - /url: SwitchTo.html
+          - generic [ref=e32]: 
+        - listitem [ref=e33]:
+          - link "WYSIWYG" [ref=e34] [cursor=pointer]:
+            - /url: WYSIWYG.html
+          - generic [ref=e35]: 
+        - listitem [ref=e36]:
+          - link "More" [ref=e37] [cursor=pointer]:
+            - /url: "#"
+          - generic [ref=e38]: 
+        - listitem [ref=e39]:
+          - link "Practice Site" [ref=e40] [cursor=pointer]:
+            - /url: http://practice.automationtesting.in/
+  - generic [ref=e44]:
+    - list [ref=e46]:
+      - listitem [ref=e47]:
+        - link "Alert with OK" [ref=e48] [cursor=pointer]:
+          - /url: "#OKTab"
+      - listitem [ref=e49]:
+        - link "Alert with OK & Cancel" [expanded] [ref=e50]:
+          - /url: "#CancelTab"
+      - listitem [ref=e51]:
+        - link "Alert with Textbox" [ref=e52] [cursor=pointer]:
+          - /url: "#Textbox"
+    - generic [ref=e53]:
+      - button "click the button to display a confirm box" [active] [ref=e54] [cursor=pointer]
+      - paragraph [ref=e55]: You Pressed Cancel
+  - generic [ref=e57]:
+    - insertion [ref=e60]:
+      - generic [ref=e62]:
+        - generic "These are topics related to the article that might interest you" [ref=e63]: Discover more
+        - link "Automation demo site" [ref=e64] [cursor=pointer]:
+          - img [ref=e66]
+          - text: Automation demo site
+        - link "Alert box handling" [ref=e68] [cursor=pointer]:
+          - img [ref=e70]
+          - text: Alert box handling
+        - link "Front end development kits" [ref=e72] [cursor=pointer]:
+          - img [ref=e74]
+          - text: Front end development kits
+        - link "Dynamic data automation" [ref=e76] [cursor=pointer]:
+          - img [ref=e78]
+          - text: Dynamic data automation
+        - link "JQuery ProgressBar testing" [ref=e80] [cursor=pointer]:
+          - img [ref=e82]
+          - text: JQuery ProgressBar testing
+        - link "UI testing frameworks" [ref=e84] [cursor=pointer]:
+          - img [ref=e86]
+          - text: UI testing frameworks
+        - link "Chart automation tools" [ref=e88] [cursor=pointer]:
+          - img [ref=e90]
+          - text: Chart automation tools
+        - link "Website performance monitoring" [ref=e92] [cursor=pointer]:
+          - img [ref=e94]
+          - text: Website performance monitoring
+        - link "Modal window automation" [ref=e96] [cursor=pointer]:
+          - img [ref=e98]
+          - text: Modal window automation
+        - link "Video" [ref=e100] [cursor=pointer]:
+          - img [ref=e102]
+          - text: Video
+    - insertion [ref=e106]:
+      - generic [ref=e108]:
+        - generic "These are topics related to the article that might interest you" [ref=e109]: Discover more
+        - link "Video" [ref=e110] [cursor=pointer]:
+          - img [ref=e112]
+          - text: Video
+        - link "WYSIWYG editor testing" [ref=e114] [cursor=pointer]:
+          - img [ref=e116]
+          - text: WYSIWYG editor testing
+        - link "Browser automation extensions" [ref=e118] [cursor=pointer]:
+          - img [ref=e120]
+          - text: Browser automation extensions
+        - link "Manual testing guides" [ref=e122] [cursor=pointer]:
+          - img [ref=e124]
+          - text: Manual testing guides
+        - link "Testing practice sites" [ref=e126] [cursor=pointer]:
+          - img [ref=e128]
+          - text: Testing practice sites
+        - link "JQuery ProgressBar testing" [ref=e130] [cursor=pointer]:
+          - img [ref=e132]
+          - text: JQuery ProgressBar testing
+        - link "Test automation frameworks" [ref=e134] [cursor=pointer]:
+          - img [ref=e136]
+          - text: Test automation frameworks
+        - link "Automation demo site" [ref=e138] [cursor=pointer]:
+          - img [ref=e140]
+          - text: Automation demo site
+        - link "Debugging tools and services" [ref=e142] [cursor=pointer]:
+          - img [ref=e144]
+          - text: Debugging tools and services
+        - link "Mobile app testing services" [ref=e146] [cursor=pointer]:
+          - img [ref=e148]
+          - text: Mobile app testing services
+    - insertion [ref=e152]:
+      - generic [ref=e154]:
+        - generic "These are topics related to the article that might interest you" [ref=e155]: Discover more
+        - link "Selenium WebDriver tutorials" [ref=e156] [cursor=pointer]:
+          - img [ref=e158]
+          - text: Selenium WebDriver tutorials
+        - link "Testing practice sites" [ref=e160] [cursor=pointer]:
+          - img [ref=e162]
+          - text: Testing practice sites
+        - link "Automated browser testing" [ref=e164] [cursor=pointer]:
+          - img [ref=e166]
+          - text: Automated browser testing
+        - link "Widgets" [ref=e168] [cursor=pointer]:
+          - img [ref=e170]
+          - text: Widgets
+        - link "JQuery ProgressBar testing" [ref=e172] [cursor=pointer]:
+          - img [ref=e174]
+          - text: JQuery ProgressBar testing
+        - link "Web development bootcamps" [ref=e176] [cursor=pointer]:
+          - img [ref=e178]
+          - text: Web development bootcamps
+        - link "Cloud testing environments" [ref=e180] [cursor=pointer]:
+          - img [ref=e182]
+          - text: Cloud testing environments
+        - link "QA certification programs" [ref=e184] [cursor=pointer]:
+          - img [ref=e186]
+          - text: QA certification programs
+        - link "Test automation" [ref=e188] [cursor=pointer]:
+          - img [ref=e190]
+          - text: Test automation
+        - link "Automation Testing" [ref=e192] [cursor=pointer]:
+          - img [ref=e194]
+          - text: Automation Testing
+    - insertion [ref=e198]:
+      - generic [ref=e200]:
+        - generic "These are topics related to the article that might interest you" [ref=e201]: Discover more
+        - link "Automation demo site" [ref=e202] [cursor=pointer]:
+          - img [ref=e204]
+          - text: Automation demo site
+        - link "Browser automation extensions" [ref=e206] [cursor=pointer]:
+          - img [ref=e208]
+          - text: Browser automation extensions
+        - link "WYSIWYG editor testing" [ref=e210] [cursor=pointer]:
+          - img [ref=e212]
+          - text: WYSIWYG editor testing
+        - link "User interface design software" [ref=e214] [cursor=pointer]:
+          - img [ref=e216]
+          - text: User interface design software
+        - link "Drag and drop automation" [ref=e218] [cursor=pointer]:
+          - img [ref=e220]
+          - text: Drag and drop automation
+        - link "Agile software development training" [ref=e222] [cursor=pointer]:
+          - img [ref=e224]
+          - text: Agile software development training
+        - link "Automation testing courses" [ref=e226] [cursor=pointer]:
+          - img [ref=e228]
+          - text: Automation testing courses
+        - link "JQuery ProgressBar testing" [ref=e230] [cursor=pointer]:
+          - img [ref=e232]
+          - text: JQuery ProgressBar testing
+        - link "Website testing services" [ref=e234] [cursor=pointer]:
+          - img [ref=e236]
+          - text: Website testing services
+        - link "JavaScript programming books" [ref=e238] [cursor=pointer]:
+          - img [ref=e240]
+          - text: JavaScript programming books
+    - contentinfo [ref=e243]:
+      - generic [ref=e245]:
+        - generic [ref=e246]:
+          - text: "\"@ 2016\""
+          - link "Automation Testing" [ref=e247] [cursor=pointer]:
+            - /url: "#"
+          - text: "\"All Rights Reserved.\""
+        - generic [ref=e248]:
+          - link "" [ref=e249] [cursor=pointer]:
+            - /url: https://www.facebook.com/automationtesting2016/
+            - generic [ref=e250]: 
+          - link "" [ref=e251] [cursor=pointer]:
+            - /url: https://twitter.com/krishnasakinala
+            - generic [ref=e252]: 
+          - link "" [ref=e253] [cursor=pointer]:
+            - /url: https://www.linkedin.com/nhome/?trk=hb_signin
+            - generic [ref=e254]: 
+          - link "" [ref=e255] [cursor=pointer]:
+            - /url: https://plus.google.com/105286300926085335367
+            - generic [ref=e256]: 
+          - link "" [ref=e257] [cursor=pointer]:
+            - /url: https://www.youtube.com/channel/UCmQRa3pWM9zsB474URz8ESg
+            - generic [ref=e258]: 
+```

@@ -27,6 +27,7 @@ export default class FetchingDataPage {
    */
   async clickFetchingDataHeader(): Promise<void> {
     await this.fetchingDataHeader.click();
-    await this.page.waitForTimeout(3000); // let cards load
+    const firstCard = this.page.locator(this.cardSelector).first();
+    await firstCard.waitFor({ state: "visible" });
   }
 }
