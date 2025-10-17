@@ -1,0 +1,137 @@
+# Page snapshot
+
+```yaml
+- generic [ref=e1]:
+  - banner [ref=e2]:
+    - generic [ref=e5]:
+      - link "image not displaying" [ref=e7] [cursor=pointer]:
+        - /url: http://www.automationtesting.in
+        - img "image not displaying" [ref=e8]
+      - heading "Automation Demo Site" [level=1] [ref=e10]
+    - navigation [ref=e11]:
+      - list [ref=e14]:
+        - listitem [ref=e15]:
+          - link "Home" [ref=e16] [cursor=pointer]:
+            - /url: Index.html
+        - listitem [ref=e17]:
+          - link "Register" [ref=e18] [cursor=pointer]:
+            - /url: Register.html
+        - listitem [ref=e19]:
+          - link "WebTable" [ref=e20] [cursor=pointer]:
+            - /url: WebTable.html
+        - listitem [ref=e21]:
+          - link "SwitchTo" [ref=e22] [cursor=pointer]:
+            - /url: SwitchTo.html
+          - generic [ref=e23]: 
+        - listitem [ref=e24]:
+          - link "Widgets" [ref=e25] [cursor=pointer]:
+            - /url: Widgets.html
+          - generic [ref=e26]: 
+        - listitem [ref=e27]:
+          - link "Interactions" [ref=e28] [cursor=pointer]:
+            - /url: Interactions.html
+          - generic [ref=e29]: 
+        - listitem [ref=e30]:
+          - link "Video" [ref=e31] [cursor=pointer]:
+            - /url: SwitchTo.html
+          - generic [ref=e32]: 
+        - listitem [ref=e33]:
+          - link "WYSIWYG" [ref=e34] [cursor=pointer]:
+            - /url: WYSIWYG.html
+          - generic [ref=e35]: 
+        - listitem [ref=e36]:
+          - link "More" [ref=e37] [cursor=pointer]:
+            - /url: "#"
+          - generic [ref=e38]: 
+        - listitem [ref=e39]:
+          - link "Practice Site" [ref=e40] [cursor=pointer]:
+            - /url: http://practice.automationtesting.in/
+  - generic [ref=e41]:
+    - generic [ref=e44]:
+      - heading "File Download Demo for Automation" [level=2] [ref=e45]
+      - link "Download" [ref=e47] [cursor=pointer]:
+        - /url: https://github.com//sakinala/AutomationTesting/raw/master/samplefile.pdf
+      - generic [ref=e48]:
+        - generic [ref=e49]: Generated Text File to Download
+        - generic [ref=e50]:
+          - paragraph [ref=e51]: By default Download link will be hidden.
+          - paragraph [ref=e52]: You need to enter data in the textarea and click on 'Generate File' button to activate download link.
+          - paragraph [ref=e53]: Data entered in the below textarea will be download with file name 'info.txt'.
+          - generic [ref=e54]:
+            - generic [ref=e55]: "Enter Data:"
+            - textbox [ref=e56]: Automation Test Data
+            - generic [ref=e57]: 979 characters remaining
+          - button "Generate File" [ref=e58] [cursor=pointer]
+          - link "Download" [active] [ref=e59] [cursor=pointer]:
+            - /url: blob:https://demo.automationtesting.in/18aab746-3384-4c77-b539-04fe92307570
+      - generic [ref=e60]:
+        - generic [ref=e61]: Generated PDF File to Download
+        - generic [ref=e62]:
+          - paragraph [ref=e63]: By default Download link will be hidden.
+          - paragraph [ref=e64]: You need to enter data in the textarea and click on 'Generate File' button to activate download link.
+          - paragraph [ref=e65]: Data entered in the below textarea will be download with file name 'info.pdf'.
+          - generic [ref=e66]:
+            - generic [ref=e67]: "Enter Data:"
+            - textbox [ref=e68]
+            - generic [ref=e69]: 1000 characters remaining
+          - button "Generate File" [disabled] [ref=e70]
+    - generic [ref=e72]:
+      - insertion [ref=e75]:
+        - generic [ref=e77]:
+          - generic "These are topics related to the article that might interest you" [ref=e78]: Discover more
+          - link "PDF File" [ref=e79] [cursor=pointer]:
+            - img [ref=e81]
+            - text: PDF File
+          - link "PDF" [ref=e83] [cursor=pointer]:
+            - img [ref=e85]
+            - text: PDF
+          - link "pdf" [ref=e87] [cursor=pointer]:
+            - img [ref=e89]
+            - text: pdf
+      - insertion [ref=e93]:
+        - generic [ref=e95]:
+          - generic "These are topics related to the article that might interest you" [ref=e96]: Discover more
+          - link "PDF" [ref=e97] [cursor=pointer]:
+            - img [ref=e99]
+            - text: PDF
+          - link "PDF File" [ref=e101] [cursor=pointer]:
+            - img [ref=e103]
+            - text: PDF File
+          - link "pdf" [ref=e105] [cursor=pointer]:
+            - img [ref=e107]
+            - text: pdf
+      - insertion [ref=e111]:
+        - generic [ref=e113]:
+          - generic "These are topics related to the article that might interest you" [ref=e114]: Discover more
+          - link "pdf" [ref=e115] [cursor=pointer]:
+            - img [ref=e117]
+            - text: pdf
+          - link "PDF" [ref=e119] [cursor=pointer]:
+            - img [ref=e121]
+            - text: PDF
+          - link "PDF File" [ref=e123] [cursor=pointer]:
+            - img [ref=e125]
+            - text: PDF File
+    - generic [ref=e129]:
+      - generic [ref=e130]:
+        - text: "\"@ 2016\""
+        - link "Automation Testing" [ref=e131] [cursor=pointer]:
+          - /url: "#"
+        - text: "\"All Rights Reserved.\""
+      - generic [ref=e132]:
+        - link "" [ref=e133] [cursor=pointer]:
+          - /url: https://www.facebook.com/automationtesting2016/
+          - generic [ref=e134]: 
+        - link "" [ref=e135] [cursor=pointer]:
+          - /url: https://twitter.com/krishnasakinala
+          - generic [ref=e136]: 
+        - link "" [ref=e137] [cursor=pointer]:
+          - /url: https://www.linkedin.com/nhome/?trk=hb_signin
+          - generic [ref=e138]: 
+        - link "" [ref=e139] [cursor=pointer]:
+          - /url: https://plus.google.com/105286300926085335367
+          - generic [ref=e140]: 
+        - link "" [ref=e141] [cursor=pointer]:
+          - /url: https://www.youtube.com/channel/UCmQRa3pWM9zsB474URz8ESg
+          - generic [ref=e142]: 
+```
