@@ -15,6 +15,7 @@ const reporters: ReporterDescription[] = [
   ['html', { open: 'never' }],
   [
   'allure-playwright',
+  
   {
     outputFolder: ({ project }: { project: import('@playwright/test').FullProject }) =>
       `artifacts/allure-results-${project.name}`,
