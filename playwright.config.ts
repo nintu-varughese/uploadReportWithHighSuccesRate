@@ -14,17 +14,18 @@ const reporters: ReporterDescription[] = [
   ['list'],
   ['html', { open: 'never' }],
   [
-    'allure-playwright',
-    {
-      outputFolder: 'artifacts/allure-results',
-      detail: false,
-      suiteTitle: false,
-      useCucumberStepReporter: false,
-      useStepsForHooks: false,
-      screenshots: 'on',
-      videos: 'on',
-    },
-  ],
+  'allure-playwright',
+  {
+    outputFolder: ({ project }: { project: import('@playwright/test').FullProject }) =>
+      `artifacts/allure-results-${project.name}`,
+    detail: false,
+    suiteTitle: false,
+    useCucumberStepReporter: false,
+    useStepsForHooks: false,
+    screenshots: 'on',
+    videos: 'on',
+  },
+],
 ];
 
 /**
@@ -41,43 +42,39 @@ export default defineConfig({
   use: {
     baseURL: process.env.BASE_URL,
     trace: 'on-first-retry',
-    screenshot: 'on',
-    headless:true,
-
-    // Record videos for all tests
-    video: 'on',
+    screenshot: 'only-on-failure', // screenshot only on failure
+    headless: true,
+    video: 'retain-on-failure',     // record video only on failure
     contextOptions: {
       recordVideo: {
         dir: 'videos/', // videos saved here
         size: { width: 1280, height: 720 },
       },
     },
-
     viewport: { width: 1280, height: 720 },
     actionTimeout: 30_000,
     navigationTimeout: 60_000,
   },
 
   projects: [
-  {
-    name: 'chromium',
-    use: { ...devices['Desktop Chrome'] },
-  },
-  // {
-  //   name: 'firefox',
-  //   use: { ...devices['Desktop Firefox'] },
-  // },
-  // {
-  //   name: 'webkit',
-  //   use: { ...devices['Desktop Safari'] },
-  // },
-  // {
-  //   name: 'msedge',  // Edge browser mapped to msedge in your workflow
-  //   use: {
-  //     ...devices['Desktop Edge'],
-  //     channel: 'msedge',
-  //   },
-  // },
-],
-
+    {
+      name: 'chromium',
+      use: { ...devices['Desktop Chrome'] },
+    },
+    {
+      name: 'firefox',
+      use: { ...devices['Desktop Firefox'] },
+    },
+    {
+      name: 'webkit',
+      use: { ...devices['Desktop Safari'] },
+    },
+    {
+      name: 'msedge',
+      use: {
+        ...devices['Desktop Edge'],
+        channel: 'msedge',
+      },
+    },
+  ],
 });
