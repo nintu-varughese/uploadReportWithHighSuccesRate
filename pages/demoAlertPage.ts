@@ -17,7 +17,6 @@ export default class DemoAlertPage extends BasePage {
   readonly promptAlertButton: Locator;
   readonly promptMessage: (text: string) => Locator;
   readonly defaultPromptMessage: Locator;
-
   /**
    * Initializes all locators required for handling alerts
    * @param {Page} page - Playwright Page object

@@ -31,8 +31,8 @@ export default class NewTabPage extends BasePage {
    */
   async clickOpenNewTab(): Promise<Page> {
     const [newPage] = await Promise.all([
-      this.page.context().waitForEvent('page'), // Wait for new tab
-      this.openNewTabButton.click(),             // Trigger new tab
+      this.page.context().waitForEvent('page'), 
+      this.openNewTabButton.click(),             
     ]);
     await newPage.waitForLoadState('domcontentloaded');
     return newPage;

@@ -33,7 +33,7 @@ export default class PopUpWindowPage extends BasePage {
     await popup.waitForLoadState('domcontentloaded');
 
     const popupClosePromise = popup.waitForEvent('close');
-    await popup.locator(this.closeButtonSelector).click(); // use string selector
+    await popup.locator(this.closeButtonSelector).click();
     await popupClosePromise;
 
     return this.successMessageLocator;

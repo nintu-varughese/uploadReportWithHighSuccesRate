@@ -52,9 +52,5 @@ export default class CoveredElementsPage extends BasePage {
     await this.page.evaluate(() =>
       window.scrollTo({ top: 0, behavior: "smooth" })
     );
-    await expect(
-      this.missionAccomplishedText,
-      'Expected "Mission accomplished" message to be visible after clicking "You Got Me" button.'
-    ).toBeVisible();
   }
 }

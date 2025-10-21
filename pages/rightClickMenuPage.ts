@@ -6,19 +6,13 @@ import { Page, Locator } from '@playwright/test';
  */
 export default class RightClickMenuPage {
   readonly page: Page;
-
-  /** Locator for the "Right-Click Context Menu" header */
   readonly contextMenuHeader: Locator;
-
-  /** Locators for top-level context menu items */
   readonly previewOption: Locator;
   readonly shareOption: Locator;
   readonly getLinkOption: Locator;
   readonly renameOption: Locator;
   readonly deleteOption: Locator;
   readonly settingsOption: Locator;
-
-  /** Locators for Share submenu items */
   readonly twitterOption: Locator;
   readonly instagramOption: Locator;
   readonly dribbleOption: Locator;

@@ -18,22 +18,30 @@ export default class ChangeableIframePage extends BasePage {
     this.secondIframeLegend = this.iframe.locator(
       '//legend[text()="Second Iframe"]'
     );
-    this.endMessage = this.iframe.locator('//div[text()="This is the end of the journey"]');
+    this.endMessage = this.iframe.locator(
+      '//div[text()="This is the end of the journey"]'
+    );
   }
 
-/**
+  /**
    * Verifies iframe content changes from "First Iframe" to "Second Iframe"
    * by waiting until the final message appears.
    */
   async verifyIframeSequence(): Promise<void> {
-    await expect(this.header, "Changeable Iframe header is not visible")
-      .toBeVisible();
+    await expect(
+      this.header,
+      "Changeable Iframe header is not visible"
+    ).toBeVisible();
     await this.header.click();
 
-    await expect(this.firstIframeLegend, "First Iframe legend not visible after section click")
-      .toBeVisible();
+    await expect(
+      this.firstIframeLegend,
+      "First Iframe legend not visible after section click"
+    ).toBeVisible();
 
-    await expect(this.endMessage, 'End message did not appear within the expected time')
-      .toBeVisible({ timeout: 15000 });
+    await expect(
+      this.endMessage,
+      "End message did not appear within the expected time"
+    ).toBeVisible({ timeout: 15000 });
   }
 }

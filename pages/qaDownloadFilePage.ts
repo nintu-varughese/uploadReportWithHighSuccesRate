@@ -32,7 +32,6 @@ export default class QaDownloadFilePage extends BasePage {
       this.page.waitForEvent('download'),
       this.downloadButton.click(),
     ]);
-
     // Resolve absolute path and save the downloaded file
     const downloadPath = path.resolve(__dirname, `../${expectedFileName}`);
     await download.saveAs(downloadPath);

@@ -33,7 +33,6 @@ import DragDropPage from "./dragDropPage";
 import FileUploadPage from "./fileUploadPage";
 import { FileDownloadPage } from "./fileDownloadPage";
 
-// Combine all page fixtures
 type MyFixtures = {
   // QA Playground
   homePage: HomePage;

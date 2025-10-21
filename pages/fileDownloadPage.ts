@@ -66,7 +66,7 @@ export class FileDownloadPage {
     const filePath = path.resolve(
       __dirname,
       "..",
-      "testdata",
+      "downloadFile",
       await download.suggestedFilename()
     );
 

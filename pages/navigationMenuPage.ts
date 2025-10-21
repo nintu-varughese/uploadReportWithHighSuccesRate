@@ -1,11 +1,7 @@
 import { Page, Locator } from "@playwright/test";
 import fs from "fs";
 import path from "path";
-
-// Read test data JSON
-const testDataPath = path.resolve(__dirname, "../data/testdata.json");
-const testData = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
-
+import testData from "../data/testdata.json";
 /**
  * Page Object for the Navigation Menu section.
  * Handles opening the navigation menu, clicking menu items, and retrieving page headers.

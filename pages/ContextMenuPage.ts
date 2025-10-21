@@ -8,7 +8,6 @@ export default class ContextMenuPage extends BasePage {
 
   constructor(page: Page) {
     super(page);
-
     this.contextMenuSection = page.locator(
       '//h3[text()="Right-Click Context Menu"]'
     );

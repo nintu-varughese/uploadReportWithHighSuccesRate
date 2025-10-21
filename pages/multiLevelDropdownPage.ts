@@ -2,8 +2,7 @@ import { Locator, Page } from "@playwright/test";
 import BasePage from "./basePage";
 import fs from "fs";
 import path from "path";
-const testDataPath = path.resolve(__dirname, "../data/testdata.json");
-const testData = JSON.parse(fs.readFileSync(testDataPath, "utf-8"));
+import testData from "../data/testdata.json";
 
 /**
  * Page Object for Multi-Level Dropdown interactions.
