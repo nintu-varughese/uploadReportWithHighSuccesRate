@@ -42,7 +42,7 @@ export default defineConfig({
     baseURL: process.env.BASE_URL,
     trace: 'on-first-retry',
     screenshot: 'on',
-    headless:false,
+    headless:true,
 
     // Record videos for all tests
     video: 'on',
