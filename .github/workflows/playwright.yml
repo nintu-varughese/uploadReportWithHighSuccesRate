@@ -27,7 +27,11 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npx playwright test --project=${{ matrix.browser }} --reporter=html --output=results/${{ matrix.browser }}
+        run: |
+          npx playwright test \
+            --project=${{ matrix.browser }} \
+            --reporter=html \
+            --output=results/${{ matrix.browser }}/playwright-report
 
       - name: Upload browser HTML report
         uses: actions/upload-artifact@v4
@@ -63,12 +67,16 @@ jobs:
       - name: Determine best browser
         run: |
           node scripts/select-best-browser.js
-          # This script reads the test-results.json inside each playwright-report folder
+          # The script reads test-results.json inside each playwright-report folder
           # and writes the best browser name into best_browser.txt
 
       - name: Upload Best Browser HTML Report
-        uses: actions/upload-artifact@v4
+        run: |
+          BEST_BROWSER=$(cat best_browser.txt)
+          echo "Uploading HTML report for $BEST_BROWSER"
+          zip -r best-browser-report.zip results/$BEST_BROWSER/playwright-report
+      - uses: actions/upload-artifact@v4
         with:
           name: best-browser-report
-          path: results/$(cat best_browser.txt)/playwright-report
+          path: best-browser-report.zip
           retention-days: 30
