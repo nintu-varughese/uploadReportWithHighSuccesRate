@@ -18,7 +18,7 @@ const reporters: ReporterDescription[] = [
     {
       outputFolder: 'artifacts/allure-results',
       detail: false,
-      suiteTitle: false,
+      suiteTitle: true,
       useCucumberStepReporter: false,
       useStepsForHooks: false,
       screenshots: 'on',
