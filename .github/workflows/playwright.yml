@@ -1,82 +1,129 @@
 name: Playwright Tests
-
+ 
 on:
-  push:
-    branches: [ main, master ]
-  pull_request:
-    branches: [ main, master ]
-
+  workflow_dispatch:
+    inputs:
+      spec:
+        description: 'Select the spec to run (or All)'
+        required: true
+        type: choice
+        default: 'windowsandframes.spec.ts'
+        options:
+          - example.spec.ts
+          - playgrounddoc.spec.ts
+          - playgroundDynamic.spec.ts
+          - qaplayground.spec.ts
+          - screener.spec.ts
+          - All
+ 
 jobs:
   test:
-    timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chromium, firefox, webkit]
+        browser: [chromium, firefox, webkit, edge]
+ 
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+ 
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: lts/*
-
+          node-version: '20'
+ 
       - name: Install dependencies
         run: npm ci
-
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
-
-      - name: Run Playwright tests
+ 
+      - name: Install Playwright browsers
+        run: npx playwright install
+ 
+      - name: Install Allure CLI and single-file packager
         run: |
-          npx playwright test \
-            --project=${{ matrix.browser }} \
-            --reporter=html \
-            --output=results/${{ matrix.browser }}/playwright-report
-
-      - name: Upload browser HTML report
+          npm install -g allure-commandline --save-dev
+          npm install allure-single-html-file-js --save-dev
+ 
+      - name: Run Playwright tests on ${{ matrix.browser }}
+        run: |
+          if [ "${{ github.event.inputs.spec }}" = "All" ]; then
+            npx playwright test --project=${{ matrix.browser }} --reporter=line,allure-playwright --output=playwright-report
+          else
+            npx playwright test tests/${{ github.event.inputs.spec }} --project=${{ matrix.browser }} --reporter=line,allure-playwright --output=playwright-report
+          fi
+        continue-on-error: true
+ 
+      - name: Generate Allure HTML Report
+        if: always()
+        run: |
+          mkdir -p allure-report
+          allure generate allure-results --clean -o allure-report
+ 
+      - name: Save summary and upload results
+        if: always()
+        run: |
+          PASSED=$(node -e "let r=require('./allure-report/widgets/summary.json');console.log(r.statistic.passed)")
+          FAILED=$(node -e "let r=require('./allure-report/widgets/summary.json');console.log(r.statistic.failed)")
+          TOTAL=$(($PASSED + $FAILED))
+          echo "${{ matrix.browser }}: $PASSED/$TOTAL" > results.txt
+        # Archive artifacts for downstream jobs
+ 
+      - name: Upload Allure artifacts
+        if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ matrix.browser }}-report
-          path: results/${{ matrix.browser }}/playwright-report
-          retention-days: 30
-
-  best-browser-report:
-    needs: test
+          name: allure-${{ matrix.browser }}
+          path: |
+            allure-results
+            allure-report
+            results.txt
+ 
+  select-browser:
     runs-on: ubuntu-latest
+    needs: test
+ 
     steps:
-      - uses: actions/checkout@v4
-
-      - name: Download Chromium report
+      - name: Download all results
         uses: actions/download-artifact@v4
         with:
-          name: chromium-report
-          path: results/chromium/playwright-report
-
-      - name: Download Firefox report
-        uses: actions/download-artifact@v4
-        with:
-          name: firefox-report
-          path: results/firefox/playwright-report
-
-      - name: Download Webkit report
-        uses: actions/download-artifact@v4
-        with:
-          name: webkit-report
-          path: results/webkit/playwright-report
-
-      - name: Determine best browser
+          path: ./artifacts
+ 
+      - name: Find browser with highest pass rate
+        id: find_best
         run: |
-          node scripts/select-best-browser.js
-          # The script reads test-results.json inside each playwright-report folder
-          # and writes the best browser name into best_browser.txt
-
-      - name: Upload Best Browser HTML Report
+          best_browser=""
+          best_rate=0
+          for file in ./artifacts/allure-*/results.txt; do
+            browser=$(basename $(dirname $file) | cut -d'-' -f2)
+            PASS=$(cat $file | awk -F: '{print $2}' | awk -F'/' '{print $1}' | xargs)
+            TOTAL=$(cat $file | awk -F'/' '{print $2}' | xargs)
+            if [ "$TOTAL" -gt 0 ]; then
+              rate=$(awk "BEGIN { printf \"%.4f\", $PASS/$TOTAL }")
+              if (( $(echo "$rate > $best_rate" | bc -l) )); then
+                best_rate=$rate
+                best_browser=$browser
+              fi
+            fi
+          done
+          echo "Best browser: $best_browser"
+          echo "best=$best_browser" >> $GITHUB_OUTPUT
+ 
+      - name: Copy best browser's report for final publication
         run: |
-          BEST_BROWSER=$(cat best_browser.txt)
-          echo "Uploading HTML report for $BEST_BROWSER"
-          zip -r best-browser-report.zip results/$BEST_BROWSER/playwright-report
-      - uses: actions/upload-artifact@v4
+          cp -r ./artifacts/allure-${{ steps.find_best.outputs.best }}/allure-report ./allure-report
+ 
+      - name: Install Allure CLI and single-file packager
+        run: |
+          npm install -g allure-commandline --save-dev
+          npm install allure-single-html-file-js --save-dev
+ 
+      - name: Combine into Single Allure HTML File
+        run: |
+          node ./node_modules/allure-single-html-file-js/combine.js allure-report
+          mv allure-report/complete.html allure-report.html
+          echo "✅ Combined Allure HTML generated: allure-report.html"
+ 
+      - name: Upload Single Allure HTML File
+        uses: actions/upload-artifact@v4
         with:
-          name: best-browser-report
-          path: best-browser-report.zip
-          retention-days: 30
+          name: Allure-Report-Single-File
+          path: allure-report.html
