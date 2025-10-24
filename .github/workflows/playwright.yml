@@ -9,11 +9,8 @@ on:
         type: choice
         default: 'windowsandframes.spec.ts'
         options:
-          - example.spec.ts
-          - playgrounddoc.spec.ts
-          - playgroundDynamic.spec.ts
-          - qaplayground.spec.ts
-          - screener.spec.ts
+          - automationDemoSite.spec.ts
+          - qaPlayground.spec.ts
           - All
  
 jobs:
