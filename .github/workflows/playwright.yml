@@ -89,6 +89,15 @@ jobs:
         with:
           path: ./artifacts
 
+      - name: Combine all browser results into one file
+        id: combine_results
+        run: |
+          echo "📊 Combined Browser Results" > all-results.txt
+          for file in ./artifacts/allure-*/results.txt; do
+            cat $file >> all-results.txt
+          done
+          echo "✅ Combined results created at all-results.txt"
+
       - name: Find browser with highest pass rate
         id: find_best
         run: |
@@ -122,6 +131,12 @@ jobs:
           node ./node_modules/allure-single-html-file-js/combine.js allure-report
           mv allure-report/complete.html allure-report.html
 
+      - name: Upload All Results Text
+        uses: actions/upload-artifact@v4
+        with:
+          name: All-Browser-Results
+          path: all-results.txt
+
       - name: Upload Single Allure HTML File
         uses: actions/upload-artifact@v4
         with:
@@ -130,5 +145,10 @@ jobs:
 
       - name: Add summary with pass rate
         run: |
-          echo "Uploaded report from **${{ steps.find_best.outputs.best }}** browser" >> $GITHUB_STEP_SUMMARY
-          echo "Pass Percentage: **${{ steps.find_best.outputs.rate }}%**" >> $GITHUB_STEP_SUMMARY
+          echo "### ✅ Playwright Test Summary" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "**Uploaded report from:** ${{ steps.find_best.outputs.best }}" >> $GITHUB_STEP_SUMMARY
+          echo "**Pass Percentage:** ${{ steps.find_best.outputs.rate }}%" >> $GITHUB_STEP_SUMMARY
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "#### Browser-wise Results:" >> $GITHUB_STEP_SUMMARY
+          cat all-results.txt >> $GITHUB_STEP_SUMMARY
