@@ -62,7 +62,12 @@ jobs:
           FAILED=$(node -e "let r=require('./allure-report/widgets/summary.json');console.log(r.statistic.failed)")
           BROKEN=$(node -e "let r=require('./allure-report/widgets/summary.json');console.log(r.statistic.broken || 0)")
           TOTAL=$(($PASSED + $FAILED + $BROKEN))
-          echo "${{ matrix.browser }}: $PASSED/$TOTAL" > results.txt
+          if [ "$TOTAL" -gt 0 ]; then
+            PERCENT=$(awk "BEGIN { printf \"%.2f\", ($PASSED/$TOTAL)*100 }")
+          else
+            PERCENT=0
+          fi
+          echo "${{ matrix.browser }}: $PASSED/$TOTAL ($PERCENT%)" > results.txt
 
       - name: Upload Allure artifacts
         if: always()
@@ -92,17 +97,16 @@ jobs:
           for file in ./artifacts/allure-*/results.txt; do
             browser=$(basename $(dirname $file) | cut -d'-' -f2)
             PASS=$(cat $file | awk -F: '{print $2}' | awk -F'/' '{print $1}' | xargs)
-            TOTAL=$(cat $file | awk -F'/' '{print $2}' | xargs)
-            if [ "$TOTAL" -gt 0 ]; then
-              rate=$(awk "BEGIN { printf \"%.4f\", $PASS/$TOTAL }")
-              if (( $(echo "$rate > $best_rate" | bc -l) )); then
-                best_rate=$rate
-                best_browser=$browser
-              fi
+            TOTAL=$(cat $file | awk -F'/' '{print $2}' | awk -F' ' '{print $1}' | xargs)
+            PERCENT=$(echo "$PASS $TOTAL" | awk '{ if ($2>0) printf "%.2f", ($1/$2)*100; else print 0 }')
+            if (( $(echo "$PERCENT > $best_rate" | bc -l) )); then
+              best_rate=$PERCENT
+              best_browser=$browser
             fi
           done
-          echo "Best browser: $best_browser"
+          echo "Best browser: $best_browser with $best_rate% pass rate"
           echo "best=$best_browser" >> $GITHUB_OUTPUT
+          echo "rate=$best_rate" >> $GITHUB_OUTPUT
 
       - name: Copy best browser's report for final publication
         run: |
@@ -117,10 +121,14 @@ jobs:
         run: |
           node ./node_modules/allure-single-html-file-js/combine.js allure-report
           mv allure-report/complete.html allure-report.html
-          echo "✅ Combined Allure HTML generated: allure-report.html"
 
       - name: Upload Single Allure HTML File
         uses: actions/upload-artifact@v4
         with:
           name: Allure-Report-Single-File
           path: allure-report.html
+
+      - name: Add summary with pass rate
+        run: |
+          echo "Uploaded report from **${{ steps.find_best.outputs.best }}** browser" >> $GITHUB_STEP_SUMMARY
+          echo "Pass Percentage: **${{ steps.find_best.outputs.rate }}%**" >> $GITHUB_STEP_SUMMARY
