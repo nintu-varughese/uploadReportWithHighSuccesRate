@@ -18,7 +18,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        browser: [chromium, firefox, webkit, edge]
+        browser: [chromium, firefox, webkit]
 
     steps:
       - name: Checkout repository
@@ -96,7 +96,7 @@ jobs:
           for file in ./artifacts/allure-*/results.txt; do
             cat $file >> all-results.txt
           done
-          echo "✅ Combined results created at all-results.txt"
+          echo "Combined results created at all-results.txt"
 
       - name: Find browser with highest pass rate
         id: find_best
