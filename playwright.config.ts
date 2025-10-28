@@ -71,13 +71,13 @@ export default defineConfig({
     name: 'webkit',
     use: { ...devices['Desktop Safari'] },
   },
-  {
-    name: 'msedge',  // Edge browser mapped to msedge in your workflow
-    use: {
-      ...devices['Desktop Edge'],
-      channel: 'msedge',
-    },
-  },
+  // {
+  //   name: 'msedge',  // Edge browser mapped to msedge in your workflow
+  //   use: {
+  //     ...devices['Desktop Edge'],
+  //     channel: 'msedge',
+  //   },
+  //},
 ],
 
 });
